@@ -17,4 +17,4 @@ Contoh: Browser abis itu ke Server abis itu ke Browser lagi.
 - MySQL = untuk nyimpan data 
 
 5. Hubungan Antarteknologi
-   KE-5 Bahasa pemrograman tadi bekerja sama saling melengkapi
+- KE-5 Bahasa pemrograman tadi bekerja sama saling melengkapi
