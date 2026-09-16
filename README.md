@@ -5,4 +5,4 @@ Nama: [Felix Sebastian]
 NIM: [2611500001]
 Kelompok: [ti1a]
 Tahun Ajaran: 2026/2027 Gasal
-![logo isbal](logoisbal)
+![logo isbal](logoisbal.png)
