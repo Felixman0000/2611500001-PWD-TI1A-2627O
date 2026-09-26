@@ -20,17 +20,18 @@
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(15, 23, 42, 0.15);
         }
-        #about .about-content {
-            display: grid;
-            grid-template-columns: 180px 1fr;
+        #home .welcome-heading {
+            display: flex;
+            align-items: center;
             gap: 20px;
-            align-items: start;
         }
-        #about .profile-photo {
+        #home .welcome-heading h2 {
+            flex: 1;
+        }
+        #home .profile-photo {
             display: block;
-            width: 160px;
-            height: 160px;
-            margin: 0 auto;
+            width: 120px;
+            height: 120px;
             border: 3px solid #128123;
             object-fit: cover;
         }
@@ -52,10 +53,10 @@
             flex-shrink: 0;
         }
         @media (max-width: 600px) {
-            #about .about-content {
-                grid-template-columns: 1fr;
+            #home .profile-photo {
+                width: 88px;
+                height: 88px;
             }
-
             #about p {
                 flex-direction: column;
                 align-items: flex-start;
@@ -86,27 +87,25 @@
     </header>
     <main>
         <section id="home">
-            <h2>Selamat Datang</h2>
+            <div class="welcome-heading">
+                <h2>Selamat Datang</h2>
+                <img class="profile-photo" src="img/Foto-Profil.jpeg" alt="Foto profil Felix Sebastian">
+            </div>
             <p>Lagi Belajar Html!</p>
         </section>
         <section id="about">
             <h2>Tentang Saya</h2>
-            <div class="about-content">
-                <img class="profile-photo" src="img/Foto-Profil.jpeg" alt="Foto profil Felix Sebastian">
-                <div>
-                    <p>Saya adalah seorang pembelajar HTML.</p>
-                    <p><strong>NIM :</strong> 2611500001</p>
-                    <p><strong>Nama Lengkap :</strong> Felix Sebastian</p>
-                    <p><strong>Tempat lahir :</strong> Pangkalpinang</p>
-                    <p><strong>Tanggal lahir :</strong> 07 Januari 2008</p>
-                    <p><strong>Hobi :</strong> Trading, Belajar Bahasa, Olahraga, Main Catur, Baca Buku</p>
-                    <p><strong>Pasangan :</strong> BELUM ADA!</p>
-                    <p><strong>Pekerjaan :</strong> Nganggur</p>
-                    <p><strong>Nama Orang Tua :</strong> Wanti Dan Awen</p>
-                    <p><strong>Nama Kakak :</strong> Tidak Ada</p>
-                    <p><strong>Nama Adik :</strong> Fedric Sebastian</p>
-                </div>
-            </div>
+            <p>Saya adalah seorang pembelajar HTML.</p>
+            <p><strong>NIM :</strong> 2611500001</p>
+            <p><strong>Nama Lengkap :</strong> Felix Sebastian</p>
+            <p><strong>Tempat lahir :</strong> Pangkalpinang</p>
+            <p><strong>Tanggal lahir :</strong> 07 Januari 2008</p>
+            <p><strong>Hobi :</strong> Trading, Belajar Bahasa, Olahraga, Main Catur, Baca Buku</p>
+            <p><strong>Pasangan :</strong> BELUM ADA!</p>
+            <p><strong>Pekerjaan :</strong> Nganggur</p>
+            <p><strong>Nama Orang Tua :</strong> Wanti Dan Awen</p>
+            <p><strong>Nama Kakak :</strong> Tidak Ada</p>
+            <p><strong>Nama Adik :</strong> Fedric Sebastian</p>
         </section>
         <section id="contact">
             <h2>Kontak Saya</h2>
