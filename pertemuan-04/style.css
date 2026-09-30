@@ -1,0 +1,110 @@
+<DOCTYPE html>
+<html lang="en,id,jv">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Judul Halaman</title>    
+        <link rel="stylesheet" href="style.css">
+    </head> 
+
+
+        body {
+            margin: 20px;
+            color: #023a07;
+            background-color: #f4f7f3;
+            font-family: 'Times New Roman', Times, serif, sans-serif;
+        }
+        h1, h2 {
+            color: #032715;
+        }
+        h2 {
+            margin: 24px 0 12px;
+            padding: 8px;
+            background-color: #e4e7e9;
+            border-bottom: 2px solid #477653;
+        }
+        #home .profile-photo {
+            width: 120px;
+            height: 120px;
+            border: 3px solid #477653;
+        }
+        #about p {
+            margin: 6px 0;
+            padding: 8px;
+            background-color: #ffffff;
+            border: 1px solid #bdcdbf;
+        }
+        #about strong {
+            display: inline-block;
+            width: 170px;
+            color: #174b32;
+        }
+        #about strong span:first-child {
+            display: inline-block;
+            width: 145px;
+        }
+        #about strong span:last-child {
+            text-align: center;
+        }
+        #contact {
+            max-width: 620px;
+            margin: 24px 0;
+            padding: 16px;
+            color: #243329;
+            background-color: #e8f0e8;
+            border: 1px solid #9caf9d;
+        }
+        #contact form {
+            margin-top: 12px;
+        }
+        #contact label {
+            display: block;
+            margin: 12px 0 4px;
+            color: #174b32;
+            font-weight: bold;
+        }
+        #contact input:not([type="radio"]):not([type="checkbox"]) {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 9px;
+            color: #243329;
+            background-color: #ffffff;
+            border: 1px solid #829985;
+        }
+        .radio-group {
+            margin: 12px 0;
+            padding: 10px;
+            background-color: #ffffff;
+            border: 1px solid #829985;
+        }
+        .radio-group legend {
+            padding: 0 5px;
+            color: #174b32;
+            font-weight: bold;
+        }
+        .radio-options label {
+            display: block;
+            margin: 6px 0;
+            color: #243329;
+            font-weight: normal;
+        }
+        input[type="radio"], input[type="checkbox"] {
+            margin-right: 6px;
+        }
+        #contact button {
+            margin: 8px 6px 0 0;
+            padding: 9px 16px;
+            color: #ffffff;
+            background-color: #245b3b;
+            border: 1px solid #17452b;
+        }
+        #contact button:hover {
+            background-color: #17452b;
+        }
+        footer {
+            margin-top: 24px;
+            padding: 12px;
+            color: #425448;
+            background-color: #e2e9e2;
+            text-align: center;
+        }
