@@ -13,7 +13,7 @@
             margin-bottom: 24px;
             padding: 20px;
             color: #3d8b2a;
-            background-color: #477653;
+            background-color: #19b135;
             text-align: center;
         }
         header ul {
@@ -27,9 +27,26 @@
             display: block;
             margin: 0 12px;
             padding: 6px 12px;
-            color: #4ba93f;
+            color: #174b32;
             text-decoration: none;
         }
+        header li a:focus {
+            outline: 2px solid #141313;
+            outline-offset: 2px;    
+            border-radius: 6px;
+            background-color: rgba(95, 190, 146, 0.15);
+        }
+        header li a:active {
+            background-color: #3b9089;
+            transform: translateY(1px);
+        }
+        @media (max-width: 600px) { ... }.
+            header ul {
+                padding: 16px;
+                position: sticky;
+                top: 0;
+                z-index: 1000;
+            }
         h1, h2 {
             color: #032715;
         }
