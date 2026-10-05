@@ -71,7 +71,3 @@ Catatan bukti dari DevTools:
 Pemeriksaan file CSS menggunakan editor dan browser DevTools menunjukkan tidak ada error sintaks yang terdeteksi untuk `style.css` dan `index.html`.
 
 Upaya validasi formal melalui layanan W3C CSS Validation Service juga dilakukan, namun pada lingkungan sandbox saat ini terjadi pembatasan akses dari Cloudflare (HTTP 403), sehingga validasi otomatis melalui server pihak ketiga tidak dapat dijalankan sepenuhnya dari sini. Karena itu, validasi yang bisa dibuktikan secara langsung di lingkungan ini adalah:
-
-- pemeriksaan editor: tidak ada error pada file CSS/HTML;
-- pengecekan layout di browser DevTools;
-- perbaikan galat syntax yang ditemukan pada CSS.

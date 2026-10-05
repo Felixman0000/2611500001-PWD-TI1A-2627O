@@ -146,6 +146,37 @@ h2 {
     text-align: center;
 }
 
+@media (max-width: 767px) {
+    body {
+        padding: 16px;
+    }
+
+    main {
+        width: 100%;
+    }
+
+    #about p {
+        display: block;
+        word-break: break-word;
+    }
+
+    #about strong {
+        display: block;
+        width: 100%;
+        margin-bottom: 4px;
+    }
+
+    #about strong span:first-child,
+    #about strong span:last-child {
+        display: block;
+        width: auto;
+        text-align: left;
+    }
+
+    #contact input:not([type="radio"]):not([type="checkbox"]) {
+        min-width: 0;
+    }
+}
 #contact {
     max-width: 100%;
     padding: 16px;
