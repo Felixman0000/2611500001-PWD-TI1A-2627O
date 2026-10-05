@@ -1,13 +1,17 @@
 :root {
-    --bg-color: #f4f7f3;
-    --panel-color: #ffffff;
-    --header-bg: #19b135;
-    --primary-color: #245b3b;
-    --text-color: #023a07;
-    --muted-text: #425448;
-    --line-color: #bdcdbf;
-    --soft-border: #829985;
-    --soft-highlight: #e4e7e9;
+    --primary-color: #3d8b2a;
+    --text-color: #243329;
+    --muted-text: #5a6b5a;
+    --bg-color: #f5f9f5;
+    --header-bg: #4aaa4a;
+    --panel-color: #f9fbf9;
+    --line-color: #d8e0d8;
+    --soft-border: #9caf9d;
+    --soft-highlight: #e8f0e8;
+    --dark-text: #032715;
+    --dark-green: #174b32;
+    --green-button: #245b3b;
+    --green-button-hover: #17452b;
 }
 
 * {
@@ -30,7 +34,7 @@ body {
 header {
     margin-bottom: 24px;
     padding: 20px;
-    color: #3d8b2a;
+    color: var(--primary-color);
     background-color: var(--header-bg);
     text-align: center;
     border-radius: 12px;
@@ -38,16 +42,16 @@ header {
 
 header h1 {
     margin: 0 0 12px;
-    color: #032715;
+    color: var(--dark-text);
     font-size: 1.8rem;
 }
 
 header nav ul {
     display: flex;
     flex-direction: column;
-    gap: 10px;
     justify-content: center;
     align-items: stretch;
+    gap: 10px;
     margin: 12px 0 0;
     padding: 0;
     list-style: none;
@@ -56,7 +60,7 @@ header nav ul {
 header li a {
     display: block;
     padding: 10px 12px;
-    color: #174b32;
+    color: var(--dark-green);
     text-decoration: none;
     border-radius: 8px;
     transition: background-color 0.2s ease, transform 0.2s ease;
@@ -92,7 +96,7 @@ section {
 
 h1,
 h2 {
-    color: #032715;
+    color: var(--dark-text);
 }
 
 h2 {
@@ -130,7 +134,7 @@ h2 {
 #about strong {
     display: inline-block;
     width: 170px;
-    color: #174b32;
+    color: var(--dark-green);
 }
 
 #about strong span:first-child {
@@ -158,7 +162,7 @@ h2 {
 #contact label {
     display: block;
     margin: 12px 0 4px;
-    color: #174b32;
+    color: var(--dark-green);
     font-weight: bold;
 }
 
@@ -182,7 +186,7 @@ h2 {
 
 .radio-group legend {
     padding: 0 5px;
-    color: #174b32;
+    color: var(--dark-green);
     font-weight: bold;
 }
 
@@ -202,14 +206,14 @@ input[type="checkbox"] {
     margin: 8px 6px 0 0;
     padding: 9px 16px;
     color: #ffffff;
-    background-color: var(--primary-color);
+    background-color: var(--green-button);
     border: 1px solid #17452b;
     border-radius: 6px;
     cursor: pointer;
 }
 
 #contact button:hover {
-    background-color: #17452b;
+    background-color: var(--green-button-hover);
 }
 
 footer {
