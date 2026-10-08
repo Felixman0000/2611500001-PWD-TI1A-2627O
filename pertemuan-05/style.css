@@ -146,7 +146,7 @@ h2 {
     text-align: center;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 767px) {}
     body {
         padding: 16px;
     }
@@ -176,12 +176,23 @@ h2 {
         cursor: pointer;
     }
     @media (max-width: 767px) {
-        .menu-toggle {
+    .menu-toggle {
             display: block;
             position: absolute;
             top: 16px;
-            right: 16px;
+            left: 7px;
         }
+    nav {
+            display: none;
+            position: absolute;
+            top: 50px;
+            left: 0;
+            width: 100%;
+            background-color: var(--header-bg);
+            padding: 5px 0;
+    }
+    nav.active {
+            display: flex;
     }
     #about strong span:first-child,
     #about strong span:last-child {
