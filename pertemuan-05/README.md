@@ -17,4 +17,4 @@ Dokumentasi pengembangan halaman web P5 yang meliputi JavaScript, DOM, event lis
 ## Riwayat Pengembangan
 
 - Perubahan P4: Memperbarui `style.css` dan `index.html`, serta menambahkan tombol hamburger.
-- Perubahan P5: Menambahkan navigasi, validasi formulir, dan pesan hasil. Pengujian di browser berhasil; perubahan ini belum dibuat commit Git.
+- Perubahan P5: Menambahkan navigasi, validasi formulir, dan pesan hasil. Pengujian di browser berhasil; perubahan ini dicommit setelah galat diperbaiki
