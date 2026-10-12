@@ -1,6 +1,9 @@
 const navToggle = document.querySelector(".menu-toggle");
 const navMenu = document.querySelector("header nav");
 
+console.log("navToggle:", navToggle);
+console.log("navMenu:", navMenu);
+
 if (navToggle && navMenu) {
   navToggle.setAttribute("aria-expanded", "false");
   navToggle.setAttribute("aria-label", "Buka navigasi");
