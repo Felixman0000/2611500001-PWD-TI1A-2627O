@@ -4,7 +4,7 @@ const navMenu = document.querySelector("header nav");
 if (navToggle && navMenu) {
   navToggle.addEventListener("click", () => {
     const isOpen = navMenu.classList.toggle("active");
-    navToggle.setAttribute("aria-expanded", String(isOpen));
+    navToggle.setAttribute("aria-expanded", isOpen);
     navToggle.setAttribute(
       "aria-label",
       isOpen ? "Tutup navigasi" : "Buka navigasi",
@@ -21,77 +21,98 @@ if (navToggle && navMenu) {
 }
 
 const contactForm = document.getElementById("contactForm");
-const feedback = document.getElementById("form-feedback");
-const nameInput = contactForm?.elements.namedItem("name");
-const phoneInput = contactForm?.elements.namedItem("phone");
-const dateInput = contactForm?.elements.namedItem("tanggal_lahir");
+const formFeedback = document.getElementById("form-feedback");
+const namaInput = document.getElementById("name");
+const emailInput = document.getElementById("email");
+const phoneInput = document.getElementById("phone");
+const tanggalInput = document.getElementById("tanggal-lahir");
 
-if (dateInput) {
+if (tanggalInput) {
   const today = new Date();
   const year = today.getFullYear();
   const month = String(today.getMonth() + 1).padStart(2, "0");
   const day = String(today.getDate()).padStart(2, "0");
-  dateInput.max = `${year}-${month}-${day}`;
+  tanggalInput.max = `${year}-${month}-${day}`;
 }
 
-if (contactForm && feedback && nameInput && phoneInput) {
-  const showFeedback = (message, isSuccess = false) => {
-    feedback.textContent = message;
-    feedback.className = isSuccess
-      ? "form-feedback form-feedback-success"
-      : "form-feedback form-feedback-error";
-    feedback.hidden = false;
-  };
-
+if (contactForm && formFeedback) {
   contactForm.addEventListener("submit", (event) => {
     event.preventDefault();
-    nameInput.setCustomValidity("");
-    phoneInput.setCustomValidity("");
+    formFeedback.className = "form-feedback form-feedback-error";
 
-    const nameLength = nameInput.value.trim().length;
-    const phone = phoneInput.value.trim();
-    const digitCount = phone.replace(/\D/g, "").length;
-    const phoneCharactersAreValid = /^[0-9+().\s-]+$/.test(phone);
-
-    if (nameLength < 3 || nameLength > 50) {
-      nameInput.setCustomValidity(
-        "Nama harus berisi 3 sampai 50 karakter selain spasi di awal atau akhir.",
-      );
-    }
-
-    if (
-      phone &&
-      (!phoneCharactersAreValid || digitCount < 8 || digitCount > 15)
-    ) {
-      phoneInput.setCustomValidity(
-        "Nomor telepon harus berisi 8 sampai 15 angka; spasi, +, tanda kurung, dan tanda hubung diperbolehkan.",
-      );
-    }
-
-    if (!contactForm.checkValidity()) {
-      showFeedback("Data belum valid. Periksa kembali isian yang ditandai.");
-      contactForm.querySelector(":invalid")?.focus();
-      contactForm.reportValidity();
+    const nama = namaInput.value.trim();
+    if (nama.length < 3 || nama.length > 50) {
+      formFeedback.textContent =
+        "Nama lengkap harus diisi 3 sampai 50 karakter.";
+      formFeedback.hidden = false;
       return;
     }
 
-    showFeedback(
-      "Form berhasil divalidasi di sisi klien. Data belum dikirim atau disimpan.",
-      true,
-    );
-  });
+    const email = emailInput.value.trim();
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      formFeedback.textContent = "Masukkan alamat email yang valid.";
+      formFeedback.hidden = false;
+      return;
+    }
 
-  contactForm.addEventListener("input", () => {
-    nameInput.setCustomValidity("");
-    phoneInput.setCustomValidity("");
-    feedback.hidden = true;
-    feedback.textContent = "";
+    const phone = phoneInput.value.trim();
+    const phoneDigits = phone.replace(/\D/g, "");
+    const phonePattern = /^[0-9+().\s-]+$/;
+    if (
+      !phonePattern.test(phone) ||
+      phoneDigits.length < 8 ||
+      phoneDigits.length > 15
+    ) {
+      formFeedback.textContent =
+        "Nomor telepon harus berisi 8 sampai 15 angka.";
+      formFeedback.hidden = false;
+      return;
+    }
+
+    const tanggal = tanggalInput.value;
+    if (tanggal === "") {
+      formFeedback.textContent = "Tanggal lahir harus diisi.";
+      formFeedback.hidden = false;
+      return;
+    }
+
+    if (tanggal > tanggalInput.max) {
+      formFeedback.textContent = "Tanggal lahir tidak boleh melebihi hari ini.";
+      formFeedback.hidden = false;
+      return;
+    }
+
+    const prodiDipilih = document.querySelectorAll(
+      'input[name="prodi[]"]:checked',
+    );
+    if (prodiDipilih.length === 0) {
+      formFeedback.textContent = "Pilih minimal satu program studi.";
+      formFeedback.hidden = false;
+      return;
+    }
+
+    const prediksiDipilih = document.querySelector(
+      'input[name="prediksi"]:checked',
+    );
+    if (!prediksiDipilih) {
+      formFeedback.textContent = "Pilih salah satu prediksi.";
+      formFeedback.hidden = false;
+      return;
+    }
+
+    formFeedback.textContent = "Form berhasil divalidasi.";
+    formFeedback.className = "form-feedback form-feedback-success";
+    formFeedback.hidden = false;
   });
 
   contactForm.addEventListener("reset", () => {
-    nameInput.setCustomValidity("");
-    phoneInput.setCustomValidity("");
-    feedback.hidden = true;
-    feedback.textContent = "";
+    formFeedback.textContent = "";
+    formFeedback.hidden = true;
+  });
+
+  contactForm.addEventListener("input", () => {
+    formFeedback.textContent = "";
+    formFeedback.hidden = true;
   });
 }
