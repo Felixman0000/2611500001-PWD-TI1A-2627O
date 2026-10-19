@@ -3,9 +3,12 @@ date_default_timezone_set('Asia/Jakarta');
 
 const NAMA_MAHASISWA = 'Felix Sebastian';
 const NIM_MAHASISWA = '2611500001';
+const PROFIL_GITHUB = 'Felixman0000';
 
 $namaMahasiswa = NAMA_MAHASISWA;
 $nimMahasiswa = NIM_MAHASISWA;
+$namaGithub = PROFIL_GITHUB;
+$urlGithub = 'https://github.com/' . rawurlencode($namaGithub);
 $tahunAkademik = '2026/2027';
 $programStudi = 'Teknik Informatika (TI)';
 $fokusProgram = 'Pemrograman Web Dasar';
@@ -13,14 +16,6 @@ $statusMahasiswa = 'Aktif';
 $semesterSaatIni = 1;
 $batasSemester = 8;
 $sisaSemester = $batasSemester - $semesterSaatIni;
-$targetBelajar = [
-    'Memahami sintaks dasar PHP.',
-    'Menggunakan variabel, konstanta, dan tipe data.',
-    'Menerapkan operator dan percabangan.',
-    'Menggunakan perulangan for dan while.',
-    'Membuat halaman web dinamis dengan PHP.',
-];
-
 if ($semesterSaatIni < 1) {
     $pemeriksaanSemester = 'Di bawah rentang';
 } elseif ($semesterSaatIni <= $batasSemester) {
@@ -87,9 +82,29 @@ switch ($semesterSaatIni) {
         <section id="php">
             <h2>Target Belajar</h2>
             <ol>
-                <?php for ($nomorTarget = 0; $nomorTarget < count($targetBelajar); $nomorTarget++): ?>
-                    <li>Target belajar ke-<?= $nomorTarget + 1 ?>: <?= htmlspecialchars($targetBelajar[$nomorTarget], ENT_QUOTES, 'UTF-8') ?></li>
-                <?php endfor; ?>
+                <?php
+                for ($nomorTarget = 1; $nomorTarget <= 5; $nomorTarget++) {
+                    echo '<li>Target belajar ke-' . $nomorTarget . ': ';
+                    switch ($nomorTarget) {
+                        case 1:
+                            echo 'Memahami sintaks dasar PHP.';
+                            break;
+                        case 2:
+                            echo 'Menggunakan variabel dan konstanta.';
+                            break;
+                        case 3:
+                            echo 'Menerapkan operator dan percabangan.';
+                            break;
+                        case 4:
+                            echo 'Menggunakan perulangan for dan while.';
+                            break;
+                        default:
+                            echo 'Belum dipetakan';
+                            break;
+                    }
+                    echo '</li>';
+                }
+                ?>
             </ol>
 
             <h3>Semester (Perulangan while)</h3>
@@ -104,7 +119,7 @@ switch ($semesterSaatIni) {
     </main>
     <footer>
         <p>&copy; <?= date('Y') ?> <?= htmlspecialchars($namaMahasiswa, ENT_QUOTES, 'UTF-8') ?> [<?= htmlspecialchars($nimMahasiswa, ENT_QUOTES, 'UTF-8') ?>].</p>
-        <p><a href="https://github.com/Felixman0000/2611500001-PWD-TI1A-2627O">GitHub Saya</a></p>
+        <p><a href="<?= htmlspecialchars($urlGithub, ENT_QUOTES, 'UTF-8') ?>">GitHub Saya (<?= htmlspecialchars($namaGithub, ENT_QUOTES, 'UTF-8') ?>)</a></p>
     </footer>
     <script src="script.js"></script>
 </body>
