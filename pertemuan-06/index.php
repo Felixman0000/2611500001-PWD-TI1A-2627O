@@ -1,4 +1,5 @@
 <?php
+
 date_default_timezone_set('Asia/Jakarta');
 
 const NAMA_MAHASISWA = 'Felix Sebastian';
@@ -12,9 +13,8 @@ $urlGithub = 'https://github.com/' . rawurlencode($namaGithub);
 $tahunAkademik = '2026/2027';
 $kodeProgramStudi = 'TI';
 $namaProdi = ($kodeProgramStudi == "SI") ? "Sistem Informasi" : (($kodeProgramStudi == "TI") ? "Teknik Informatika" : "Lainnya");
-$programStudi = $namaProdi . ' (' . $kodeProgramStudi . ')';
 $fokusProgram = 'Pemrograman Web Dasar';
-$statusMahasiswa = 'Aktif';
+$statusAktif = true;
 $semesterSaatIni = 1;
 $batasSemester = 8;
 $sisaSemester = $batasSemester - $semesterSaatIni;
@@ -53,7 +53,6 @@ switch ($semesterSaatIni) {
     <header>
         <h1>Tentang Saya</h1>
         <button id="navToggle" class="menu-toggle" type="button" aria-label="Buka navigasi" aria-expanded="false" aria-controls="navMenu">☰</button>
-
         <nav id="navMenu">
             <ul>
                 <li><a href="#home">Beranda</a></li>
@@ -73,9 +72,9 @@ switch ($semesterSaatIni) {
         <section id="about">
             <h2>Tentang Saya</h2>
             <h3>Profil Singkat</h3>
-            <p><strong><span>Program Studi</span><span>:</span></strong> <?= htmlspecialchars($programStudi, ENT_QUOTES, 'UTF-8') ?></p>
+            <p><strong><span>Program Studi</span><span>:</span></strong> <?= htmlspecialchars($namaProdi . ' (' . $kodeProgramStudi . ')', ENT_QUOTES, 'UTF-8') ?></p>
             <p><strong><span>Fokus program studi</span><span>:</span></strong> <?= htmlspecialchars($fokusProgram, ENT_QUOTES, 'UTF-8') ?></p>
-            <p><strong><span>Status mahasiswa</span><span>:</span></strong> <?= htmlspecialchars($statusMahasiswa, ENT_QUOTES, 'UTF-8') ?></p>
+            <p><strong><span>Status mahasiswa</span><span>:</span></strong> <?= $statusAktif ? 'Aktif' : 'Tidak aktif' ?></p>
             <p><strong><span>Semester</span><span>:</span></strong> <?= $semesterSaatIni ?> (<?= htmlspecialchars($keteranganSemester, ENT_QUOTES, 'UTF-8') ?>)</p>
             <p><strong><span>Sisa semester hingga batas</span><span>:</span></strong> <?= $sisaSemester ?></p>
             <p><strong><span>Pemeriksaan rentang semester</span><span>:</span></strong> <?= htmlspecialchars($pemeriksaanSemester, ENT_QUOTES, 'UTF-8') ?></p>
@@ -108,7 +107,6 @@ switch ($semesterSaatIni) {
                 }
                 ?>
             </ol>
-
             <h3>Semester (Perulangan while)</h3>
             <ul>
                 <?php $nomorSemester = 1; ?>
@@ -120,19 +118,15 @@ switch ($semesterSaatIni) {
         </section>
         <section id="contact">
             <h2>Form</h2>
-            <form id="contactForm" method="POST" action="proses.php" novalidate>
+            <form id="contactForm" action="index.php" method="get" novalidate>
                 <label for="name">Nama :</label>
                 <input type="text" id="name" name="name" placeholder="Masukkan Nama" minlength="3" maxlength="50" required autocomplete="name">
-
                 <label for="email">Email :</label>
                 <input type="email" id="email" name="email" placeholder="Masukkan Email" maxlength="100" required autocomplete="email">
-
                 <label for="phone">Nomor Telepon :</label>
                 <input type="tel" id="phone" name="phone" placeholder="Masukkan Nomor Telepon" minlength="8" maxlength="20" required autocomplete="tel">
-
                 <label for="tanggal-lahir">Tanggal Lahir :</label>
-                <input type="date" id="tanggal-lahir" name="tanggal_lahir" required autocomplete="bday" max="2026-09-28">
-
+                <input type="date" id="tanggal-lahir" name="tanggal_lahir" required autocomplete="bday" max="<?= date('Y-m-d') ?>">
                 <fieldset class="radio-group">
                     <legend>Silahkan Pilih Program Studi yang Menurut Anda Paling Menarik!</legend>
                     <div class="radio-options">
@@ -142,7 +136,6 @@ switch ($semesterSaatIni) {
                         <label><input type="checkbox" id="prodi-bd" name="prodi[]" value="bd"> BD</label>
                     </div>
                 </fieldset>
-
                 <fieldset class="radio-group">
                     <legend>Menurut Anda, apa yang akan terjadi dalam 5-10 tahun ke depan?</legend>
                     <div class="radio-options">
@@ -152,7 +145,6 @@ switch ($semesterSaatIni) {
                         <label><input type="radio" id="prediksi-depresi" name="prediksi" value="depresi"> Terjadinya The Great Depression</label>
                     </div>
                 </fieldset>
-
                 <button type="submit">Kirim</button>
                 <button type="reset">Batal</button>
                 <p id="form-feedback" class="form-feedback" role="status" aria-live="polite" hidden></p>
@@ -160,7 +152,7 @@ switch ($semesterSaatIni) {
         </section>
     </main>
     <footer>
-        <p>&copy; <?= date('Y') ?> <?= htmlspecialchars($namaMahasiswa, ENT_QUOTES, 'UTF-8') ?> [<?= htmlspecialchars($nimMahasiswa, ENT_QUOTES, 'UTF-8') ?>].</p>
+        <p>&copy; <?= date("Y") ?> <?php echo htmlspecialchars($namaMahasiswa, ENT_QUOTES, 'UTF-8'); ?> [<?= htmlspecialchars($nimMahasiswa, ENT_QUOTES, 'UTF-8') ?>]</p>
         <p><a href="<?= htmlspecialchars($urlGithub, ENT_QUOTES, 'UTF-8') ?>">GitHub Saya (<?= htmlspecialchars($namaGithub, ENT_QUOTES, 'UTF-8') ?>)</a></p>
     </footer>
     <script src="script.js"></script>
