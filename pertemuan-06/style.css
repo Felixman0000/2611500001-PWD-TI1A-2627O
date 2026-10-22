@@ -328,6 +328,7 @@ footer {
         grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
         grid-template-areas:
             "home about"
+            "php php"
             "contact contact";
     }
 
@@ -337,6 +338,10 @@ footer {
 
     #about {
         grid-area: about;
+    }
+
+    #php {
+        grid-area: php;
     }
 
     #contact {

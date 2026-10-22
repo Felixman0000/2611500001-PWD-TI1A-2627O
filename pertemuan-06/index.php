@@ -15,6 +15,7 @@ $kodeProgramStudi = 'TI';
 $namaProdi = ($kodeProgramStudi == "SI") ? "Sistem Informasi" : (($kodeProgramStudi == "TI") ? "Teknik Informatika" : "Lainnya");
 $fokusProgram = 'Pemrograman Web Dasar';
 $statusAktif = true;
+$catatanTambahan = null;
 $semesterSaatIni = 1;
 $batasSemester = 8;
 $sisaSemester = $batasSemester - $semesterSaatIni;
@@ -47,7 +48,7 @@ switch ($semesterSaatIni) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tentang Saya | Felix Sebastian</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
     <header>
@@ -79,6 +80,7 @@ switch ($semesterSaatIni) {
             <p><strong><span>Sisa semester hingga batas</span><span>:</span></strong> <?= $sisaSemester ?></p>
             <p><strong><span>Pemeriksaan rentang semester</span><span>:</span></strong> <?= htmlspecialchars($pemeriksaanSemester, ENT_QUOTES, 'UTF-8') ?></p>
             <p><strong><span>NIM</span><span>:</span></strong> <?= htmlspecialchars($nimMahasiswa, ENT_QUOTES, 'UTF-8') ?></p>
+            <p><strong><span>Catatan tambahan</span><span>:</span></strong> <?= $catatanTambahan === null ? 'Belum ada' : htmlspecialchars($catatanTambahan, ENT_QUOTES, 'UTF-8') ?></p>
         </section>
         <section id="php">
             <h2>Target Belajar</h2>
@@ -94,13 +96,13 @@ switch ($semesterSaatIni) {
                             echo 'Menggunakan variabel dan konstanta.';
                             break;
                         case 3:
-                            echo 'Menerapkan operator dan percabangan.';
+                            echo 'Penerapan percabangan if - elseif - else dan switch.';
                             break;
                         case 4:
-                            echo 'Menggunakan perulangan for dan while.';
+                            echo 'Penerapan perulangan for dan while.';
                             break;
                         default:
-                            echo 'Belum dipetakan';
+                            echo 'Melakukan pengujian dan debugging program.';
                             break;
                     }
                     echo '</li>';
