@@ -275,6 +275,11 @@ input[type="checkbox"] {
     border: 1px solid #17452b;
     border-radius: 6px;
     cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.menu-toggle[aria-expanded="true"] {
+    transform: rotate(90deg);
 }
 
 #contact button:hover {
