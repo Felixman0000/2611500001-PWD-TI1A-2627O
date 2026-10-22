@@ -205,6 +205,98 @@ h2 {
         width: auto;
         text-align: left;
     }
+
+    #contact input:not([type="radio"]):not([type="checkbox"]) {
+        min-width: 0;
+    }
+}
+
+#contact {
+    max-width: 100%;
+    padding: 16px;
+    color: #243329;
+    background-color: #e8f0e8;
+    border: 1px solid #9caf9d;
+    border-radius: 12px;
+}
+
+#contact form {
+    margin-top: 12px;
+}
+
+#contact label {
+    display: block;
+    margin: 12px 0 4px;
+    color: var(--dark-green);
+    font-weight: bold;
+}
+
+#contact input:not([type="radio"]):not([type="checkbox"]) {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 9px;
+    color: #243329;
+    background-color: #ffffff;
+    border: 1px solid var(--soft-border);
+    border-radius: 6px;
+}
+
+.radio-group {
+    margin: 12px 0;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 1px solid var(--soft-border);
+    border-radius: 8px;
+}
+
+.radio-group legend {
+    padding: 0 5px;
+    color: var(--dark-green);
+    font-weight: bold;
+}
+
+.radio-options label {
+    display: block;
+    margin: 6px 0;
+    color: #243329;
+    font-weight: normal;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    margin-right: 6px;
+}
+
+#contact button {
+    margin: 8px 6px 0 0;
+    padding: 9px 16px;
+    color: #ffffff;
+    background-color: var(--green-button);
+    border: 1px solid #17452b;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#contact button:hover {
+    background-color: var(--green-button-hover);
+}
+
+.form-feedback {
+    margin: 12px 0 0;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.form-feedback-error {
+    color: #7b1f1f;
+    background-color: #fce8e6;
+    border: 1px solid #d99a94;
+}
+
+.form-feedback-success {
+    color: #174b32;
+    background-color: #e5f3e8;
+    border: 1px solid #88b895;
 }
 
 footer {
@@ -229,7 +321,9 @@ footer {
 
     main {
         grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
-        grid-template-areas: "home about";
+        grid-template-areas:
+            "home about"
+            "contact contact";
     }
 
     #home {
@@ -238,6 +332,10 @@ footer {
 
     #about {
         grid-area: about;
+    }
+
+    #contact {
+        grid-area: contact;
     }
 
     #home .welcome-heading {
