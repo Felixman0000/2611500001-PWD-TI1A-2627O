@@ -1,162 +1,236 @@
 <?php
 
-date_default_timezone_set('Asia/Jakarta');
-
-const NAMA_MAHASISWA = 'Felix Sebastian';
-const NIM_MAHASISWA = '2611500001';
-const PROFIL_GITHUB = 'Felixman0000';
-
-$namaMahasiswa = NAMA_MAHASISWA;
-$nimMahasiswa = NIM_MAHASISWA;
-$namaGithub = PROFIL_GITHUB;
-$urlGithub = 'https://github.com/' . rawurlencode($namaGithub);
-$tahunAkademik = '2026/2027';
-$kodeProgramStudi = 'TI';
-$namaProdi = ($kodeProgramStudi == "SI") ? "Sistem Informasi" : (($kodeProgramStudi == "TI") ? "Teknik Informatika" : "Lainnya");
-$fokusProgram = 'Pemrograman Web Dasar';
+$nim = "2611500001";
+$namaMahasiswa = "Felix Sebastian";
+$programStudi = "TI";
+$tahunAkademik = "2026/2027";
+$semester = 4;
+$ipk = 3.75;
 $statusAktif = true;
 $catatanTambahan = null;
-$semesterSaatIni = 1;
+
+const NAMA_MATA_KULIAH = "Pemrograman Web Dasar";
+const PROFIL_GITHUB = "Felixman0000";
+
 $batasSemester = 8;
-$sisaSemester = $batasSemester - $semesterSaatIni;
-if ($semesterSaatIni < 1) {
-    $pemeriksaanSemester = 'Di bawah rentang';
-} elseif ($semesterSaatIni <= $batasSemester) {
-    $pemeriksaanSemester = 'Sesuai rentang';
+$sisaSemester = $batasSemester - $semester;
+$semesterValid = $semester >= 1 && $semester <= $batasSemester;
+$statusSemester = ($semesterValid && $statusAktif) ? "Sesuai rentang" : "Perlu diperiksa";
+
+if ($semester < 3) {
+	$keteranganSemester = "Semester awal";
+} elseif ($semester <= 6) {
+	$keteranganSemester = "Semester menengah";
 } else {
-    $pemeriksaanSemester = 'Melebihi rentang';
+	$keteranganSemester = "Semester akhir";
 }
 
-switch ($semesterSaatIni) {
-    case 1:
-    case 2:
-        $keteranganSemester = 'Semester awal';
-        break;
-    case 3:
-    case 4:
-    case 5:
-    case 6:
-        $keteranganSemester = 'Semester menengah';
-        break;
-    default:
-        $keteranganSemester = 'Semester akhir';
+$namaProdi = ($programStudi == "SI") ? "Sistem Informasi" : (($programStudi == "TI") ? "Teknik Informatika" : "Lainnya");
+
+switch ($programStudi) {
+	case "SI":
+		$fokusProgramStudi = "Sistem informasi dan proses bisnis";
+		break;
+	case "TI":
+		$fokusProgramStudi = "Komputasi dan pengembangan perangkat lunak";
+		break;
+	default:
+		$fokusProgramStudi = "Belum ditentukan";
 }
 ?>
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tentang Saya | Felix Sebastian</title>
-    <link rel="stylesheet" href="style.css?v=2">
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Profil Mahasiswa</title>
+	<link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-    <header>
-        <h1>Tentang Saya</h1>
-        <button id="navToggle" class="menu-toggle" type="button" aria-label="Buka navigasi" aria-expanded="false" aria-controls="navMenu">☰</button>
-        <nav id="navMenu">
-            <ul>
-                <li><a href="#home">Beranda</a></li>
-                <li><a href="#about">Tentang</a></li>
-                <li><a href="#contact">Kontak</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section id="home">
-            <div class="welcome-heading">
-                <img class="profile-photo" src="img/Foto-Profil.jpg" alt="Foto profil Felix Sebastian">
-                <h2>Selamat Datang</h2>
-            </div>
-            <p>Nama saya <?= htmlspecialchars($namaMahasiswa, ENT_QUOTES, 'UTF-8') ?>. Saya sedang mempelajari mata kuliah <strong>Pemrograman Web Dasar</strong> pada tahun akademik <?= htmlspecialchars($tahunAkademik, ENT_QUOTES, 'UTF-8') ?>.</p>
-        </section>
-        <section id="about">
-            <h2>Tentang Saya</h2>
-            <h3>Profil Singkat</h3>
-            <p><strong><span>Program Studi</span><span>:</span></strong> <?= htmlspecialchars($namaProdi . ' (' . $kodeProgramStudi . ')', ENT_QUOTES, 'UTF-8') ?></p>
-            <p><strong><span>Fokus program studi</span><span>:</span></strong> <?= htmlspecialchars($fokusProgram, ENT_QUOTES, 'UTF-8') ?></p>
-            <p><strong><span>Status mahasiswa</span><span>:</span></strong> <?= $statusAktif ? 'Aktif' : 'Tidak aktif' ?></p>
-            <p><strong><span>Semester</span><span>:</span></strong> <?= $semesterSaatIni ?> (<?= htmlspecialchars($keteranganSemester, ENT_QUOTES, 'UTF-8') ?>)</p>
-            <p><strong><span>Sisa semester hingga batas</span><span>:</span></strong> <?= $sisaSemester ?></p>
-            <p><strong><span>Pemeriksaan rentang semester</span><span>:</span></strong> <?= htmlspecialchars($pemeriksaanSemester, ENT_QUOTES, 'UTF-8') ?></p>
-            <p><strong><span>NIM</span><span>:</span></strong> <?= htmlspecialchars($nimMahasiswa, ENT_QUOTES, 'UTF-8') ?></p>
-            <p><strong><span>Catatan tambahan</span><span>:</span></strong> <?= $catatanTambahan === null ? 'Belum ada' : htmlspecialchars($catatanTambahan, ENT_QUOTES, 'UTF-8') ?></p>
-        </section>
-        <section id="php">
-            <h2>Target Belajar</h2>
-            <ol>
-                <?php
-                for ($nomorTarget = 1; $nomorTarget <= 5; $nomorTarget++) {
-                    echo '<li>Target belajar ke-' . $nomorTarget . ': ';
-                    switch ($nomorTarget) {
-                        case 1:
-                            echo 'Memahami sintaks dasar PHP.';
-                            break;
-                        case 2:
-                            echo 'Menggunakan variabel dan konstanta.';
-                            break;
-                        case 3:
-                            echo 'Penerapan percabangan if - elseif - else dan switch.';
-                            break;
-                        case 4:
-                            echo 'Penerapan perulangan for dan while.';
-                            break;
-                        default:
-                            echo 'Melakukan pengujian dan debugging program.';
-                            break;
-                    }
-                    echo '</li>';
-                }
-                ?>
-            </ol>
-            <h3>Semester (Perulangan while)</h3>
-            <ul>
-                <?php $nomorSemester = 1; ?>
-                <?php while ($nomorSemester <= 3): ?>
-                    <li>Semester <?= $nomorSemester ?></li>
-                    <?php $nomorSemester++; ?>
-                <?php endwhile; ?>
-            </ul>
-        </section>
-        <section id="contact">
-            <h2>Form</h2>
-            <form id="contactForm" action="index.php" method="get" novalidate>
-                <label for="name">Nama :</label>
-                <input type="text" id="name" name="name" placeholder="Masukkan Nama" minlength="3" maxlength="50" required autocomplete="name">
-                <label for="email">Email :</label>
-                <input type="email" id="email" name="email" placeholder="Masukkan Email" maxlength="100" required autocomplete="email">
-                <label for="phone">Nomor Telepon :</label>
-                <input type="tel" id="phone" name="phone" placeholder="Masukkan Nomor Telepon" minlength="8" maxlength="20" required autocomplete="tel">
-                <label for="tanggal-lahir">Tanggal Lahir :</label>
-                <input type="date" id="tanggal-lahir" name="tanggal_lahir" required autocomplete="bday" max="<?= date('Y-m-d') ?>">
-                <fieldset class="radio-group">
-                    <legend>Silahkan Pilih Program Studi yang Menurut Anda Paling Menarik!</legend>
-                    <div class="radio-options">
-                        <label><input type="checkbox" id="prodi-pti" name="prodi[]" value="pti"> PTI</label>
-                        <label><input type="checkbox" id="prodi-ti" name="prodi[]" value="ti"> TI</label>
-                        <label><input type="checkbox" id="prodi-si" name="prodi[]" value="si"> SI</label>
-                        <label><input type="checkbox" id="prodi-bd" name="prodi[]" value="bd"> BD</label>
-                    </div>
-                </fieldset>
-                <fieldset class="radio-group">
-                    <legend>Menurut Anda, apa yang akan terjadi dalam 5-10 tahun ke depan?</legend>
-                    <div class="radio-options">
-                        <label><input type="radio" id="prediksi-china" name="prediksi" value="china" required> China Menjadi Negara Adidaya Baru</label>
-                        <label><input type="radio" id="prediksi-ww3" name="prediksi" value="ww3"> WW3 (China vs Amerika)</label>
-                        <label><input type="radio" id="prediksi-agi" name="prediksi" value="agi"> AGI Menguasai Seluruh Dunia</label>
-                        <label><input type="radio" id="prediksi-depresi" name="prediksi" value="depresi"> Terjadinya The Great Depression</label>
-                    </div>
-                </fieldset>
-                <button type="submit">Kirim</button>
-                <button type="reset">Batal</button>
-                <p id="form-feedback" class="form-feedback" role="status" aria-live="polite" hidden></p>
-            </form>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; <?= date("Y") ?> <?php echo htmlspecialchars($namaMahasiswa, ENT_QUOTES, 'UTF-8'); ?> [<?= htmlspecialchars($nimMahasiswa, ENT_QUOTES, 'UTF-8') ?>]</p>
-        <p><a href="<?= htmlspecialchars($urlGithub, ENT_QUOTES, 'UTF-8') ?>">GitHub Saya (<?= htmlspecialchars($namaGithub, ENT_QUOTES, 'UTF-8') ?>)</a></p>
-    </footer>
-    <script src="script.js"></script>
+	<header>
+		<div class="header-top">
+			<h1>Profil Mahasiswa</h1>
+
+			<button
+				class="nav-toggle"
+				id="navToggle"
+				type="button"
+				aria-label="Buka navigasi"
+				aria-controls="navMenu"
+				aria-expanded="false">
+				&#9776;
+			</button>
+		</div>
+
+		<nav>
+			<ul id="navMenu">
+				<li><a href="#home">Beranda</a></li>
+				<li><a href="#about">Tentang</a></li>
+				<li><a href="#contact">Kontak</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<main>
+		<section id="home">
+			<h2>Selamat Datang</h2>
+			<p>Halo, saya <strong><?php echo $namaMahasiswa; ?></strong>. Saya sedang mempelajari matakuliah <strong><?php print NAMA_MATA_KULIAH; ?></strong> pada tahun akademik <?php echo $tahunAkademik; ?>.</p>
+
+			<img src="img/foto-profil.jpg" alt="Foto profil Nama Mahasiswa" />
+		</section>
+
+		<section id="about">
+			<h2>Tentang Saya</h2>
+
+			<article>
+				<h3>Profil Singkat</h3>
+				<p>Program Studi: <?php echo $namaProdi . " (" . $programStudi . ")"; ?></p>
+				<p>Fokus program studi: <?php echo $fokusProgramStudi; ?></p>
+				<p>Status mahasiswa: <?php echo $statusAktif ? "Aktif" : "Tidak aktif"; ?></p>
+				<p>Semester: <?php echo $semester . " (" . $keteranganSemester . ")"; ?></p>
+				<p>Sisa semester hingga batas: <?php echo $sisaSemester; ?></p>
+				<p>Pemeriksaan rentang semester: <?php echo $statusSemester; ?></p>
+				<p>IPK: <?php echo number_format($ipk, 2, ',', '.'); ?></p>
+				<p>Catatan tambahan: <?php echo $catatanTambahan === null ? "Belum ada" : $catatanTambahan; ?></p>
+
+				<h3>Target Belajar (Perulangan for)</h3>
+				<ol>
+					<?php
+					
+					for ($i = 1; $i <= 5; $i++) {
+						echo "<li>Target belajar ke-" . $i . ": ";
+						switch ($i) {
+							case 1:
+								echo "Memahami sintaks dasar PHP.";
+								break;
+							case 2:
+								echo "Menggunakan variabel dan konstanta.";
+								break;
+							case 3:
+								echo "Menerapkan operator dan percabangan.";
+								break;
+							case 4:
+								echo "Menggunakan perulangan for dan while.";
+								break;
+							default:
+								echo "Belum dipetakan";
+								break;
+						}
+						echo "</li>";
+					}
+					?>
+				</ol>
+
+				<h3>Semester (Perulangan while):</h3>
+				<ol>
+					<?php
+					$nomorSemester = 1;
+					while ($nomorSemester <= 3) {
+						echo "<li>Semester " . $nomorSemester . "</li>";
+						$nomorSemester++; 
+					}
+					?>
+				</ol>
+			</article>
+		</section>
+
+		<section id="contact">
+			<h2>Kontak</h2>
+
+			<p>
+				Kunjungi
+				<a target="_blank" href="https://github.com/<?= PROFIL_GITHUB ?>">profil GitHub saya</a>.
+			</p>
+
+			<form id="contactForm" action="index.php" method="get" novalidate>
+				<div class="form-group">
+					<label for="nama">Nama Lengkap</label><br />
+
+					<input
+						class="input-form"
+						type="text"
+						id="nama"
+						name="nama"
+						placeholder="Masukkan nama lengkap"
+						minlength="3"
+						maxlength="50"
+                        value="<?= isset($_GET['nama']) ? htmlspecialchars($_GET['nama']) : '' ?>"
+						required />
+				</div>
+
+				<div class="form-group">
+					<label for="email">Email</label><br />
+
+					<input class="input-form" type="email" id="email" name="email" placeholder="nama@email.com" required />
+				</div>
+
+				<div class="form-group">
+					<label for="semester">Semester</label><br />
+
+					<input class="input-form" type="number" id="semester" name="semester" min="1" max="14" required />
+				</div>
+
+				<div class="form-group">
+					<label for="tanggal">Tanggal Kunjungan</label><br />
+
+					<input class="input-form" type="date" id="tanggal" name="tanggal" required />
+				</div>
+
+				<div class="form-group">
+					<p>Jenis Pesan</p>
+
+					<input type="radio" id="pertanyaan" name="jenis_pesan" value="pertanyaan" required />
+					<label for="pertanyaan">Pertanyaan</label>
+
+					<input type="radio" id="saran" name="jenis_pesan" value="saran" />
+					<label for="saran">Saran</label>
+				</div>
+
+				<div class="form-group">
+					<p>Topik yang Diminati</p>
+
+					<input type="checkbox" id="minat-html" name="minat" value="HTML" />
+					<label for="minat-html">HTML</label>
+
+					<input type="checkbox" id="minat-css" name="minat" value="CSS" />
+					<label for="minat-css">CSS</label>
+				</div>
+
+				<div class="form-group">
+					<label for="prodi">Program Studi</label><br />
+
+					<select class="input-form" id="prodi" name="prodi" required>
+						<option value="">-- Pilih Program Studi --</option>
+						<option value="SI">Sistem Informasi</option>
+						<option value="TI">Teknik Informatika</option>
+					</select>
+				</div>
+
+				<div class="form-group">
+					<label for="pesan">Pesan</label><br />
+
+					<textarea
+						class="input-form"
+						id="pesan"
+						name="pesan"
+						maxlength="300"
+						placeholder="Tulis pesan Anda"
+						required></textarea>
+				</div>
+
+				<button type="submit">Kirim</button>
+				<button type="reset">Batal</button>
+				<p id="formFeedback"></p>
+			</form>
+		</section>
+	</main>
+
+	<footer>
+		<p>&copy; <?= date("Y") ?> <?php echo $namaMahasiswa; ?> [<?= $nim ?>]</p>
+	</footer>
+	<script src="script.js"></script>
 </body>
+
 </html>

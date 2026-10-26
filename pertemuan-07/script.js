@@ -1,128 +1,99 @@
 const navToggle = document.getElementById("navToggle");
 const navMenu = document.getElementById("navMenu");
 
-if (navToggle && navMenu) {
-  const setNavigationOpen = (isOpen) => {
-    navMenu.classList.toggle("active", isOpen);
-    navToggle.setAttribute("aria-expanded", String(isOpen));
-    navToggle.setAttribute(
-      "aria-label",
-      isOpen ? "Tutup navigasi" : "Buka navigasi",
-    );
-    navToggle.textContent = isOpen ? "×" : "☰";
-  };
+navToggle.addEventListener("click", () => {
+  const isOpen = navMenu.classList.toggle("nav-open");
 
-  navToggle.addEventListener("click", () => {
-    setNavigationOpen(!navMenu.classList.contains("active"));
-  });
+  navToggle.setAttribute("aria-expanded", isOpen);
 
-  navMenu.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      setNavigationOpen(false);
-    });
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && navMenu.classList.contains("active")) {
-      setNavigationOpen(false);
-      navToggle.focus();
-    }
-  });
-}
+  if (isOpen) {
+    navToggle.setAttribute("aria-label", "Tutup navigasi");
+  } else {
+    navToggle.setAttribute("aria-label", "Buka navigasi");
+  }
+});
 
 const contactForm = document.getElementById("contactForm");
-const formFeedback = document.getElementById("form-feedback");
-const namaInput = document.getElementById("name");
+const formFeedback = document.getElementById("formFeedback");
+
+const namaInput = document.getElementById("nama");
 const emailInput = document.getElementById("email");
-const phoneInput = document.getElementById("phone");
-const tanggalInput = document.getElementById("tanggal-lahir");
+const semesterInput = document.getElementById("semester");
+const tanggalInput = document.getElementById("tanggal");
+const prodiInput = document.getElementById("prodi");
+const pesanInput = document.getElementById("pesan");
 
-if (tanggalInput) {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, "0");
-  const day = String(today.getDate()).padStart(2, "0");
-  tanggalInput.max = `${year}-${month}-${day}`;
-}
+contactForm.addEventListener("submit", (event) => {
+  event.preventDefault();
 
-if (contactForm && formFeedback) {
-  contactForm.addEventListener("submit", (event) => {
-    //
-    formFeedback.className = "form-feedback form-feedback-error";
+  const nama = namaInput.value.trim();
+  const email = emailInput.value.trim();
+  const semester = Number(semesterInput.value);
+  const tanggal = tanggalInput.value;
+  const jenisPesan = document.querySelector(
+    'input[name="jenis_pesan"]:checked',
+  );
+  const topikDipilih = document.querySelectorAll('input[name="minat"]:checked');
+  const prodi = prodiInput.value;
+  const pesan = pesanInput.value.trim();
 
-    const nama = namaInput.value.trim();
-    if (nama.length < 3 || nama.length > 50) {
-      formFeedback.textContent =
-        "Nama lengkap harus diisi 3 sampai 50 karakter.";
-      formFeedback.hidden = false;
-      return;
-    }
+  formFeedback.className = "form-feedback-error";
 
-    const email = emailInput.value.trim();
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(email)) {
-      formFeedback.textContent = "Masukkan alamat email yang valid.";
-      formFeedback.hidden = false;
-      return;
-    }
+  if (nama.length < 3 || nama.length > 50) {
+    formFeedback.textContent = "Nama lengkap harus diisi 3 sampai 50 karakter.";
+    return;
+  }
 
-    const phone = phoneInput.value.trim();
-    const phoneDigits = phone.replace(/\D/g, "");
-    const phonePattern = /^[0-9+().\s-]+$/;
-    if (
-      !phonePattern.test(phone) ||
-      phoneDigits.length < 8 ||
-      phoneDigits.length > 15
-    ) {
-      formFeedback.textContent =
-        "Nomor telepon harus berisi 8 sampai 15 angka.";
-      formFeedback.hidden = false;
-      return;
-    }
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    const tanggal = tanggalInput.value;
-    if (tanggal === "") {
-      formFeedback.textContent = "Tanggal lahir harus diisi.";
-      formFeedback.hidden = false;
-      return;
-    }
+  if (!emailPattern.test(email)) {
+    formFeedback.textContent = "Masukkan alamat email yang valid.";
+    return;
+  }
 
-    if (tanggal > tanggalInput.max) {
-      formFeedback.textContent = "Tanggal lahir tidak boleh melebihi hari ini.";
-      formFeedback.hidden = false;
-      return;
-    }
+  if (semesterInput.value === "" || semester < 1 || semester > 14) {
+    formFeedback.textContent = "Semester harus diisi dengan angka 1 sampai 14.";
+    return;
+  }
 
-    const prodiDipilih = document.querySelectorAll(
-      'input[name="prodi[]"]:checked',
-    );
-    if (prodiDipilih.length === 0) {
-      formFeedback.textContent = "Pilih minimal satu program studi.";
-      formFeedback.hidden = false;
-      return;
-    }
+  if (tanggal === "") {
+    formFeedback.textContent = "Tanggal kunjungan harus diisi.";
+    return;
+  }
 
-    const prediksiDipilih = document.querySelector(
-      'input[name="prediksi"]:checked',
-    );
-    if (!prediksiDipilih) {
-      formFeedback.textContent = "Pilih salah satu prediksi.";
-      formFeedback.hidden = false;
-      return;
-    }
+  if (!jenisPesan) {
+    formFeedback.textContent = "Pilih jenis pesan.";
+    return;
+  }
 
-    formFeedback.textContent = "Form berhasil divalidasi.";
-    formFeedback.className = "form-feedback form-feedback-success";
-    formFeedback.hidden = false;
-  });
+  if (topikDipilih.length === 0) {
+    formFeedback.textContent = "Pilih minimal satu topik yang diminati.";
+    return;
+  }
 
-  contactForm.addEventListener("reset", () => {
-    formFeedback.textContent = "";
-    formFeedback.hidden = true;
-  });
+  if (prodi === "") {
+    formFeedback.textContent = "Pilih program studi.";
+    return;
+  }
 
-  contactForm.addEventListener("input", () => {
-    formFeedback.textContent = "";
-    formFeedback.hidden = true;
-  });
-}
+  if (pesan.length === 0) {
+    formFeedback.textContent = "Pesan harus diisi.";
+    return;
+  }
+
+  if (pesan.length > 300) {
+    formFeedback.textContent = "Pesan maksimal 300 karakter.";
+    return;
+  }
+
+  formFeedback.textContent = "Form berhasil divalidasi.";
+  formFeedback.className = "form-feedback-success";
+});
+
+contactForm.addEventListener("reset", () => {
+  formFeedback.textContent = "";
+});
+
+contactForm.addEventListener("input", () => {
+  formFeedback.textContent = "";
+});
