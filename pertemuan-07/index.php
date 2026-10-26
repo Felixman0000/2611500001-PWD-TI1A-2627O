@@ -1,5 +1,7 @@
 <?php
 
+echo $_GET['name'] ?? '';
+
 date_default_timezone_set('Asia/Jakarta');
 
 const NAMA_MAHASISWA = 'Felix Sebastian';
