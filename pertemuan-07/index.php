@@ -1,6 +1,10 @@
 <?php
 
 echo $_GET['name'] ?? '';
+echo $_GET['email'] ?? '';
+echo $_GET['phone'] ?? '';
+echo $_GET['tanggal-lahir'] ?? '';
+
 
 date_default_timezone_set('Asia/Jakarta');
 
