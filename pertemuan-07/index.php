@@ -1,10 +1,12 @@
 <?php
+session_start();
+$_SESSION['name'] = $_POST['name'] ?? '';
+$_SESSION['email'] = $_POST['email'] ?? '';
+$_SESSION['phone'] = $_POST['phone'] ?? '';
 
-echo $_POST['name'] ?? '';
-echo $_POST['email'] ?? '';
-echo $_POST['phone'] ?? '';
-echo $_POST['tanggal-lahir'] ?? '';
-
+echo $_SESSION['name'] ?? '';
+echo $_SESSION['email'] ?? '';
+echo $_SESSION['phone'] ?? '';
 
 date_default_timezone_set('Asia/Jakarta');
 
