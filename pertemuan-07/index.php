@@ -1,9 +1,9 @@
 <?php
 
-echo $_GET['name'] ?? '';
-echo $_GET['email'] ?? '';
-echo $_GET['phone'] ?? '';
-echo $_GET['tanggal-lahir'] ?? '';
+echo $_POST['name'] ?? '';
+echo $_POST['email'] ?? '';
+echo $_POST['phone'] ?? '';
+echo $_POST['tanggal-lahir'] ?? '';
 
 
 date_default_timezone_set('Asia/Jakarta');
