@@ -8,7 +8,7 @@ $nim = "2611500001";
 $namaMahasiswa = "Felix Sebastian";
 $programStudi = "TI";
 $tahunAkademik = "2026/2027";
-$semester = 4;
+$semester = 1;
 $ipk = 3.75;
 $statusAktif = true;
 $catatanTambahan = null;
@@ -227,6 +227,7 @@ switch ($programStudi) {
 				<button type="submit">Kirim</button>
 				<button type="reset">Batal</button>
 				<p id="formFeedback"></p>
+				
 			</form>
 		</section>
 	</main>
