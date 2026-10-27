@@ -1,9 +1,12 @@
 <?php
-// P6: PHP dasar dan pemrograman sisi peladen
-// Bagian 1: Variabel dan konstanta
-$nim = "0344300002";
-$namaMahasiswa = "Cantika Putih";
-$programStudi = "SI";
+if (isset($_GET['nama'])) {
+$nama = $_GET['nama'];
+echo "Nama yang diterima: " . htmlspecialchars($nama, ENT_QUOTES, 'UTF-8');
+}
+
+$nim = "2611500001";
+$namaMahasiswa = "Felix Sebastian";
+$programStudi = "TI";
 $tahunAkademik = "2026/2027";
 $semester = 4;
 $ipk = 3.75;
@@ -11,15 +14,13 @@ $statusAktif = true;
 $catatanTambahan = null;
 
 const NAMA_MATA_KULIAH = "Pemrograman Web Dasar";
-const PROFIL_GITHUB = "satpamal";
+const PROFIL_GITHUB = "Felixman0000";
 
-// Bagian 2: Operator
 $batasSemester = 8;
 $sisaSemester = $batasSemester - $semester;
 $semesterValid = $semester >= 1 && $semester <= $batasSemester;
 $statusSemester = ($semesterValid && $statusAktif) ? "Sesuai rentang" : "Perlu diperiksa";
 
-// Bagian 3: Percabangan if-elseif-else
 if ($semester < 3) {
 	$keteranganSemester = "Semester awal";
 } elseif ($semester <= 6) {
@@ -30,7 +31,6 @@ if ($semester < 3) {
 
 $namaProdi = ($programStudi == "SI") ? "Sistem Informasi" : (($programStudi == "TI") ? "Teknik Informatika" : "Lainnya");
 
-// Bagian 4: Percabangan switch-case-default
 switch ($programStudi) {
 	case "SI":
 		$fokusProgramStudi = "Sistem informasi dan proses bisnis";
@@ -102,7 +102,7 @@ switch ($programStudi) {
 				<h3>Target Belajar (Perulangan for)</h3>
 				<ol>
 					<?php
-					// Perulangan for tanpa array; materi larik dibahas pada P9.
+					
 					for ($i = 1; $i <= 5; $i++) {
 						echo "<li>Target belajar ke-" . $i . ": ";
 						switch ($i) {
@@ -133,7 +133,7 @@ switch ($programStudi) {
 					$nomorSemester = 1;
 					while ($nomorSemester <= 3) {
 						echo "<li>Semester " . $nomorSemester . "</li>";
-						$nomorSemester++; // operator penugasan
+						$nomorSemester++; 
 					}
 					?>
 				</ol>
@@ -160,6 +160,7 @@ switch ($programStudi) {
 						placeholder="Masukkan nama lengkap"
 						minlength="3"
 						maxlength="50"
+                        value="<?= isset($_GET['nama']) ? htmlspecialchars($_GET['nama']) : '' ?>"
 						required />
 				</div>
 
