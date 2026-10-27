@@ -1,8 +1,22 @@
 <?php
-if (isset($_GET['nama'])) {
-$nama = $_GET['nama'];
-echo "Nama yang diterima: " . htmlspecialchars($nama, ENT_QUOTES, 'UTF-8');
+if (isset($_POST['nama'])) {
+	$nama = $_POST['nama'];
+	echo "Nama yang diterima: " . htmlspecialchars($nama, ENT_QUOTES, 'UTF-8');
 }
+
+$email = $_POST['email'] ?? '';
+$semesterForm = $_POST['semester'] ?? '';
+$tanggal = $_POST['tanggal'] ?? '';
+$jenisPesan = $_POST['jenis_pesan'] ?? '';
+$prodi = $_POST['prodi'] ?? '';
+$pesan = $_POST['pesan'] ?? '';
+
+$email = $_POST['email'] ?? '';
+$semesterForm = $_POST['semester'] ?? '';
+$tanggal = $_POST['tanggal'] ?? '';
+$jenisPesan = $_POST['jenis_pesan'] ?? '';
+$prodi = $_POST['prodi'] ?? '';
+$pesan = $_POST['pesan'] ?? '';
 
 $nim = "2611500001";
 $namaMahasiswa = "Felix Sebastian";
@@ -148,7 +162,7 @@ switch ($programStudi) {
 				<a target="_blank" href="https://github.com/<?= PROFIL_GITHUB ?>">profil GitHub saya</a>.
 			</p>
 
-			<form id="contactForm" action="index.php" method="get" novalidate>
+			<form id="contactForm" action="index.php" method="post" novalidate>
 				<div class="form-group">
 					<label for="nama">Nama Lengkap</label><br />
 
@@ -160,7 +174,7 @@ switch ($programStudi) {
 						placeholder="Masukkan nama lengkap"
 						minlength="3"
 						maxlength="50"
-                        value="<?= isset($_GET['nama']) ? htmlspecialchars($_GET['nama']) : '' ?>"
+						value="<?= isset($_POST['nama']) ? htmlspecialchars($_POST['nama'], ENT_QUOTES, 'UTF-8') : '' ?>"
 						required />
 				</div>
 
@@ -195,10 +209,10 @@ switch ($programStudi) {
 				<div class="form-group">
 					<p>Topik yang Diminati</p>
 
-					<input type="checkbox" id="minat-html" name="minat" value="HTML" />
+					<input type="checkbox" id="minat-html" name="minat[]" value="HTML" />
 					<label for="minat-html">HTML</label>
 
-					<input type="checkbox" id="minat-css" name="minat" value="CSS" />
+					<input type="checkbox" id="minat-css" name="minat[]" value="CSS" />
 					<label for="minat-css">CSS</label>
 				</div>
 
