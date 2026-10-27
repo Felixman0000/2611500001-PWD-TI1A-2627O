@@ -1,9 +1,4 @@
 <?php
-if (isset($_POST['nama'])) {
-	$nama = $_POST['nama'];
-	echo "Nama yang diterima: " . htmlspecialchars($nama, ENT_QUOTES, 'UTF-8');
-}
-
 $nama = trim((string) ($_POST['nama'] ?? ''));
 $email = trim((string) ($_POST['email'] ?? ''));
 $semesterForm = trim((string) ($_POST['semester'] ?? ''));
@@ -12,75 +7,50 @@ $prodi = trim((string) ($_POST['prodi'] ?? ''));
 $pesan = trim((string) ($_POST['pesan'] ?? ''));
 $tanggal = trim((string) ($_POST['tanggal'] ?? ''));
 $minat = $_POST['minat'] ?? [];
-$email = $_POST['email'] ?? '';
-
-$semesterForm = $_POST['semester'] ?? '';
-$tanggal = $_POST['tanggal'] ?? '';
-$jenisPesan = $_POST['jenis_pesan'] ?? '';
-$prodi = $_POST['prodi'] ?? '';
-$pesan = $_POST['pesan'] ?? '';
 $pesanKesalahan = '';
 
-	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-if (trim($nama ?? '') === '') {
-$pesanKesalahan .= 'Nama lengkap wajib diisi. ';
-}
-if (trim($email) === '') {
-$pesanKesalahan .= 'Email wajib diisi. ';
-}
-if (trim($semesterForm) === '') {
-$pesanKesalahan .= 'Semester wajib diisi. ';
-}
-if (trim($tanggal) === '') {
-$pesanKesalahan .= 'Tanggal kunjungan wajib diisi. ';
-}	
-if ($jenisPesan === '') {
-$pesanKesalahan .= 'Jenis pesan wajib dipilih. ';
-}
-if ($prodi === '') {
-$pesanKesalahan .= 'Program studi wajib dipilih. ';
-}
-if (trim($pesan) === '') {
-$pesanKesalahan .= 'Pesan wajib diisi. ';
-}
-if (empty($minat)) {
-$pesanKesalahan .= 'Minat wajib dipilih minimal satu. ';
-}
-}
-if (trim($semesterForm) !== '') {
-$semesterValid = filter_var(
-$semesterForm,
-FILTER_VALIDATE_INT
-);
-if (
-$semesterValid === false ||
-$semesterValid < 1 ||
-$semesterValid > 14
-) {
-$pesanKesalahan .= 'Semester harus berupa bilangan bulat antara 1 dan 14. ';
-}
-}
-if (trim($email) !== '') {
-if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-$pesanKesalahan .= 'Format email tidak valid. ';
-}
-}
-if (!in_array($jenisPesan, ['pertanyaan', 'saran'], true)) {
-$pesanKesalahan .= 'Jenis pesan tidak valid. ';
-}
-if (!in_array($prodi, ['SI', 'TI'], true)) {
-$pesanKesalahan .= 'Program studi tidak valid. ';
-}
-$minatDiizinkan = ['HTML', 'CSS'];
-if (!is_array($minat)) {
-$pesanKesalahan .= 'Format pilihan topik tidak valid. ';
-} else {
-foreach ($minat as $topik) {
-if (!in_array($topik, $minatDiizinkan, true)) {
-$pesanKesalahan .= 'Pilihan topik tidak valid. ';
-break;
-}
-}
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	if ($nama === '') {
+		$pesanKesalahan .= 'Nama lengkap wajib diisi. ';
+	}
+	if ($email === '') {
+		$pesanKesalahan .= 'Email wajib diisi. ';
+	} elseif (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+		$pesanKesalahan .= 'Format email tidak valid. ';
+	}
+	if ($semesterForm === '') {
+		$pesanKesalahan .= 'Semester wajib diisi. ';
+	} else {
+		$semesterValid = filter_var($semesterForm, FILTER_VALIDATE_INT);
+		if ($semesterValid === false || $semesterValid < 1 || $semesterValid > 14) {
+			$pesanKesalahan .= 'Semester harus berupa bilangan bulat antara 1 dan 14. ';
+		}
+	}
+	if ($tanggal === '') {
+		$pesanKesalahan .= 'Tanggal kunjungan harus diisi. ';
+	}
+	if (!in_array($jenisPesan, ['pertanyaan', 'saran'], true)) {
+		$pesanKesalahan .= 'Jenis pesan tidak valid. ';
+	}
+	if (!in_array($prodi, ['SI', 'TI'], true)) {
+		$pesanKesalahan .= 'Program studi tidak valid. ';
+	}
+	if ($pesan === '') {
+		$pesanKesalahan .= 'Pesan wajib diisi. ';
+	}
+	if (!is_array($minat)) {
+		$pesanKesalahan .= 'Format pilihan topik tidak valid. ';
+	} elseif (empty($minat)) {
+		$pesanKesalahan .= 'Minat wajib dipilih minimal satu. ';
+	} else {
+		$minatDiizinkan = ['HTML', 'CSS'];
+		foreach ($minat as $topik) {
+			if (!in_array($topik, $minatDiizinkan, true)) {
+				$pesanKesalahan .= 'Pilihan topik tidak valid. ';
+				break;
+			}
+		}
+	}
 }
 
 $nim = "2611500001";
@@ -313,6 +283,28 @@ switch ($programStudi) {
 				<p id="formFeedback"></p>
 				
 			</form>
+
+			<?php if ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
+				<h3>Data yang Diterima Peladen</h3>
+				<p>Nama: <?= htmlspecialchars($nama, ENT_QUOTES, 'UTF-8') ?></p>
+				<p>Email: <?= htmlspecialchars($email, ENT_QUOTES, 'UTF-8') ?></p>
+				<p>Semester: <?= htmlspecialchars($semesterForm, ENT_QUOTES, 'UTF-8') ?></p>
+				<p>Tanggal kunjungan: <?= htmlspecialchars($tanggal, ENT_QUOTES, 'UTF-8') ?></p>
+				<p>Jenis pesan: <?= htmlspecialchars($jenisPesan, ENT_QUOTES, 'UTF-8') ?></p>
+				<p>Program studi: <?= htmlspecialchars($prodi, ENT_QUOTES, 'UTF-8') ?></p>
+				<p>Minat:</p>
+				<?php if (is_array($minat) && count($minat) > 0): ?>
+					<ul>
+						<?php foreach ($minat as $topik): ?>
+							<li><?= htmlspecialchars((string) $topik, ENT_QUOTES, 'UTF-8') ?></li>
+						<?php endforeach; ?>
+					</ul>
+				<?php else: ?>
+					<p>Tidak ada minat yang dipilih.</p>
+				<?php endif; ?>
+				<p>Pesan:</p>
+				<p><?= nl2br(htmlspecialchars($pesan, ENT_QUOTES, 'UTF-8')) ?></p>
+			<?php endif; ?>
 		</section>
 	</main>
 
