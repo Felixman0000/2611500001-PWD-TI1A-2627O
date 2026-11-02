@@ -443,6 +443,7 @@ switch ($programStudi) {
 			</form>
 
 			<?php if (is_array($activityResult)): ?>
+				<p class="form-feedback-success" role="status">Form Berhasil Dikirm</p>
 				<article class="submission-result" aria-live="polite">
 					<h3>Rencana Kegiatan yang Dikirim</h3>
 					<p><strong>Nama Kegiatan:</strong> <?= htmlspecialchars($activityResult["nama_kegiatan"], ENT_QUOTES, "UTF-8") ?></p>

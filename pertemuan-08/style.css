@@ -171,6 +171,10 @@ section {
   font-weight: bold;
 }
 
+#rencana-kegiatan label {
+  text-shadow: 0 1px 1px rgba(15, 23, 42, 0.2);
+}
+
 .input-form {
   width: 100%;
   max-width: 100%;
