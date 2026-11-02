@@ -378,6 +378,7 @@ switch ($programStudi) {
 						maxlength="100"
 						value="<?= htmlspecialchars($activityOld["nama_kegiatan"] ?? "", ENT_QUOTES, "UTF-8") ?>"
 						required />
+
 					<?php if (isset($activityErrors["nama_kegiatan"])): ?>
 						<p class="form-feedback-error" role="alert"><?= htmlspecialchars($activityErrors["nama_kegiatan"], ENT_QUOTES, "UTF-8") ?></p>
 					<?php endif; ?>
@@ -394,6 +395,7 @@ switch ($programStudi) {
 						<option value="olahraga" <?= ($activityOld["kategori_kegiatan"] ?? "") === "olahraga" ? "selected" : "" ?>>Olahraga</option>
 						<option value="lainnya" <?= ($activityOld["kategori_kegiatan"] ?? "") === "lainnya" ? "selected" : "" ?>>Lainnya</option>
 					</select>
+
 					<?php if (isset($activityErrors["kategori_kegiatan"])): ?>
 						<p class="form-feedback-error" role="alert"><?= htmlspecialchars($activityErrors["kategori_kegiatan"], ENT_QUOTES, "UTF-8") ?></p>
 					<?php endif; ?>
@@ -403,6 +405,7 @@ switch ($programStudi) {
 					<label for="tanggal-pelaksanaan">Tanggal Pelaksanaan</label><br />
 
 					<input class="input-form" type="date" id="tanggal-pelaksanaan" name="tanggal_pelaksanaan" value="<?= htmlspecialchars($activityOld["tanggal_pelaksanaan"] ?? "", ENT_QUOTES, "UTF-8") ?>" required />
+
 					<?php if (isset($activityErrors["tanggal_pelaksanaan"])): ?>
 						<p class="form-feedback-error" role="alert"><?= htmlspecialchars($activityErrors["tanggal_pelaksanaan"], ENT_QUOTES, "UTF-8") ?></p>
 					<?php endif; ?>
@@ -412,6 +415,7 @@ switch ($programStudi) {
 					<label for="lokasi-kegiatan">Lokasi Kegiatan</label><br />
 
 					<input class="input-form" type="text" id="lokasi-kegiatan" name="lokasi_kegiatan" maxlength="150" value="<?= htmlspecialchars($activityOld["lokasi_kegiatan"] ?? "", ENT_QUOTES, "UTF-8") ?>" required />
+
 					<?php if (isset($activityErrors["lokasi_kegiatan"])): ?>
 						<p class="form-feedback-error" role="alert"><?= htmlspecialchars($activityErrors["lokasi_kegiatan"], ENT_QUOTES, "UTF-8") ?></p>
 					<?php endif; ?>
@@ -427,12 +431,13 @@ switch ($programStudi) {
 						rows="5"
 						maxlength="1000"
 						required><?= htmlspecialchars($activityOld["deskripsi_kegiatan"] ?? "", ENT_QUOTES, "UTF-8") ?></textarea>
+
 					<?php if (isset($activityErrors["deskripsi_kegiatan"])): ?>
 						<p class="form-feedback-error" role="alert"><?= htmlspecialchars($activityErrors["deskripsi_kegiatan"], ENT_QUOTES, "UTF-8") ?></p>
 					<?php endif; ?>
 				</div>
 
-				<button type="submit">Kirim Rencana</button>
+				<button type="submit">Kirim</button>
 				<button type="reset">Batal</button>
 				<p class="form-feedback" data-form-feedback aria-live="polite"></p>
 			</form>
