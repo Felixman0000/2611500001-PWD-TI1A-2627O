@@ -5,21 +5,11 @@ if (
 	$_SERVER["REQUEST_METHOD"] === "POST" &&
 	($_POST["form_type"] ?? "") === "activity"
 ) {
-	$namaKegiatan = is_string($_POST["nama_kegiatan"] ?? null)
-		? trim($_POST["nama_kegiatan"])
-		: "";
-	$kategoriKegiatan = is_string($_POST["kategori_kegiatan"] ?? null)
-		? trim($_POST["kategori_kegiatan"])
-		: "";
-	$tanggalPelaksanaan = is_string($_POST["tanggal_pelaksanaan"] ?? null)
-		? trim($_POST["tanggal_pelaksanaan"])
-		: "";
-	$lokasiKegiatan = is_string($_POST["lokasi_kegiatan"] ?? null)
-		? trim($_POST["lokasi_kegiatan"])
-		: "";
-	$deskripsiKegiatan = is_string($_POST["deskripsi_kegiatan"] ?? null)
-		? trim($_POST["deskripsi_kegiatan"])
-		: "";
+	$namaKegiatan = trim((string) (is_string($_POST["nama_kegiatan"] ?? null) ? $_POST["nama_kegiatan"] : ""));
+	$kategoriKegiatan = trim((string) (is_string($_POST["kategori_kegiatan"] ?? null) ? $_POST["kategori_kegiatan"] : ""));
+	$tanggalPelaksanaan = trim((string) (is_string($_POST["tanggal_pelaksanaan"] ?? null) ? $_POST["tanggal_pelaksanaan"] : ""));
+	$lokasiKegiatan = trim((string) (is_string($_POST["lokasi_kegiatan"] ?? null) ? $_POST["lokasi_kegiatan"] : ""));
+	$deskripsiKegiatan = trim((string) (is_string($_POST["deskripsi_kegiatan"] ?? null) ? $_POST["deskripsi_kegiatan"] : ""));
 
 	$activityData = [
 		"nama_kegiatan" => $namaKegiatan,
