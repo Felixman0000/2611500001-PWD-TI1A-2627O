@@ -374,6 +374,7 @@ switch ($programStudi) {
 						type="text"
 						id="nama-kegiatan"
 						name="nama_kegiatan"
+						placeholder="Masukkan nama kegiatan"
 						minlength="1"
 						maxlength="100"
 						value="<?= htmlspecialchars($activityOld["nama_kegiatan"] ?? "", ENT_QUOTES, "UTF-8") ?>"
@@ -414,7 +415,7 @@ switch ($programStudi) {
 				<div class="form-group">
 					<label for="lokasi-kegiatan">Lokasi Kegiatan</label><br />
 
-					<input class="input-form" type="text" id="lokasi-kegiatan" name="lokasi_kegiatan" maxlength="150" value="<?= htmlspecialchars($activityOld["lokasi_kegiatan"] ?? "", ENT_QUOTES, "UTF-8") ?>" required />
+					<input class="input-form" type="text" id="lokasi-kegiatan" name="lokasi_kegiatan" placeholder="Masukkan lokasi kegiatan" maxlength="150" value="<?= htmlspecialchars($activityOld["lokasi_kegiatan"] ?? "", ENT_QUOTES, "UTF-8") ?>" required />
 
 					<?php if (isset($activityErrors["lokasi_kegiatan"])): ?>
 						<p class="form-feedback-error" role="alert"><?= htmlspecialchars($activityErrors["lokasi_kegiatan"], ENT_QUOTES, "UTF-8") ?></p>
@@ -430,6 +431,7 @@ switch ($programStudi) {
 						name="deskripsi_kegiatan"
 						rows="5"
 						maxlength="1000"
+						placeholder="Tulis deskripsi kegiatan Anda"
 						required><?= htmlspecialchars($activityOld["deskripsi_kegiatan"] ?? "", ENT_QUOTES, "UTF-8") ?></textarea>
 
 					<?php if (isset($activityErrors["deskripsi_kegiatan"])): ?>
