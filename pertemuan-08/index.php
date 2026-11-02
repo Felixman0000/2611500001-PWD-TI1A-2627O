@@ -5,11 +5,11 @@ if (
 	$_SERVER["REQUEST_METHOD"] === "POST" &&
 	($_POST["form_type"] ?? "") === "activity"
 ) {
-	$namaKegiatan = trim((string) (is_string($_POST["nama_kegiatan"] ?? null) ? $_POST["nama_kegiatan"] : ""));
-	$kategoriKegiatan = trim((string) (is_string($_POST["kategori_kegiatan"] ?? null) ? $_POST["kategori_kegiatan"] : ""));
-	$tanggalPelaksanaan = trim((string) (is_string($_POST["tanggal_pelaksanaan"] ?? null) ? $_POST["tanggal_pelaksanaan"] : ""));
-	$lokasiKegiatan = trim((string) (is_string($_POST["lokasi_kegiatan"] ?? null) ? $_POST["lokasi_kegiatan"] : ""));
-	$deskripsiKegiatan = trim((string) (is_string($_POST["deskripsi_kegiatan"] ?? null) ? $_POST["deskripsi_kegiatan"] : ""));
+	$namaKegiatan = trim((string) ($_POST["nama_kegiatan"] ?? ""));
+	$kategoriKegiatan = trim((string) ($_POST["kategori_kegiatan"] ?? ""));
+	$tanggalPelaksanaan = trim((string) ($_POST["tanggal_pelaksanaan"] ?? ""));
+	$lokasiKegiatan = trim((string) ($_POST["lokasi_kegiatan"] ?? ""));
+	$deskripsiKegiatan = trim((string) ($_POST["deskripsi_kegiatan"] ?? ""));
 
 	$activityData = [
 		"nama_kegiatan" => $namaKegiatan,
@@ -41,12 +41,27 @@ if (
 	}
 
 	if ($activityErrors === []) {
-		$_SESSION["rencana_kegiatan"] = $activityData;
-		unset($_SESSION["rencana_kegiatan_errors"], $_SESSION["rencana_kegiatan_old"]);
+		$_SESSION["nama_kegiatan"] = $namaKegiatan;
+		$_SESSION["kategori_kegiatan"] = $kategoriKegiatan;
+		$_SESSION["tanggal_pelaksanaan"] = $tanggalPelaksanaan;
+		$_SESSION["lokasi_kegiatan"] = $lokasiKegiatan;
+		$_SESSION["deskripsi_kegiatan"] = $deskripsiKegiatan;
+		unset(
+			$_SESSION["rencana_kegiatan"],
+			$_SESSION["rencana_kegiatan_errors"],
+			$_SESSION["rencana_kegiatan_old"]
+		);
 	} else {
 		$_SESSION["rencana_kegiatan_errors"] = $activityErrors;
 		$_SESSION["rencana_kegiatan_old"] = $activityData;
-		unset($_SESSION["rencana_kegiatan"]);
+		unset(
+			$_SESSION["nama_kegiatan"],
+			$_SESSION["kategori_kegiatan"],
+			$_SESSION["tanggal_pelaksanaan"],
+			$_SESSION["lokasi_kegiatan"],
+			$_SESSION["deskripsi_kegiatan"],
+			$_SESSION["rencana_kegiatan"]
+		);
 	}
 
 	header("Location: index.php#rencana-kegiatan");
@@ -86,7 +101,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 $activityErrors = $_SESSION["rencana_kegiatan_errors"] ?? [];
 $activityOld = $_SESSION["rencana_kegiatan_old"] ?? [];
-$activityResult = $_SESSION["rencana_kegiatan"] ?? null;
+$activityResult = isset($_SESSION["nama_kegiatan"])
+	? [
+	$_SESSION["nama_kegiatan"]  = $namaKegiatan ?? "",
+	$_SESSION["kategori_kegiatan"] = $kategoriKegiatan ?? "",
+	$_SESSION["tanggal_pelaksanaan"] = $tanggalPelaksanaan ?? "",
+	$_SESSION["lokasi_kegiatan"] = $lokasiKegiatan ?? "",
+	$_SESSION["deskripsi_kegiatan"] = $deskripsiKegiatan ?? "",
+	]
+	: null;
 unset($_SESSION["rencana_kegiatan_errors"], $_SESSION["rencana_kegiatan_old"]);
 
 // Mengamankan data sebelum ditampilkan kembali ke halaman HTML.
@@ -345,7 +368,16 @@ switch ($programStudi) {
 
 				<div class="form-group">
 					<label for="nama-kegiatan">Nama Kegiatan</label><br />
-					<input class="input-form" type="text" id="nama-kegiatan" name="nama_kegiatan" minlength="1" maxlength="100" value="<?= htmlspecialchars($activityOld["nama_kegiatan"] ?? "", ENT_QUOTES, "UTF-8") ?>" required />
+
+					<input
+						class="input-form"
+						type="text"
+						id="nama-kegiatan"
+						name="nama_kegiatan"
+						minlength="1"
+						maxlength="100"
+						value="<?= htmlspecialchars($activityOld["nama_kegiatan"] ?? "", ENT_QUOTES, "UTF-8") ?>"
+						required />
 					<?php if (isset($activityErrors["nama_kegiatan"])): ?>
 						<p class="form-feedback-error" role="alert"><?= htmlspecialchars($activityErrors["nama_kegiatan"], ENT_QUOTES, "UTF-8") ?></p>
 					<?php endif; ?>
@@ -353,6 +385,7 @@ switch ($programStudi) {
 
 				<div class="form-group">
 					<label for="kategori-kegiatan">Kategori Kegiatan</label><br />
+
 					<select class="input-form" id="kategori-kegiatan" name="kategori_kegiatan" required>
 						<option value="">-- Pilih Kategori --</option>
 						<option value="akademik" <?= ($activityOld["kategori_kegiatan"] ?? "") === "akademik" ? "selected" : "" ?>>Akademik</option>
@@ -368,6 +401,7 @@ switch ($programStudi) {
 
 				<div class="form-group">
 					<label for="tanggal-pelaksanaan">Tanggal Pelaksanaan</label><br />
+
 					<input class="input-form" type="date" id="tanggal-pelaksanaan" name="tanggal_pelaksanaan" value="<?= htmlspecialchars($activityOld["tanggal_pelaksanaan"] ?? "", ENT_QUOTES, "UTF-8") ?>" required />
 					<?php if (isset($activityErrors["tanggal_pelaksanaan"])): ?>
 						<p class="form-feedback-error" role="alert"><?= htmlspecialchars($activityErrors["tanggal_pelaksanaan"], ENT_QUOTES, "UTF-8") ?></p>
@@ -376,6 +410,7 @@ switch ($programStudi) {
 
 				<div class="form-group">
 					<label for="lokasi-kegiatan">Lokasi Kegiatan</label><br />
+
 					<input class="input-form" type="text" id="lokasi-kegiatan" name="lokasi_kegiatan" maxlength="150" value="<?= htmlspecialchars($activityOld["lokasi_kegiatan"] ?? "", ENT_QUOTES, "UTF-8") ?>" required />
 					<?php if (isset($activityErrors["lokasi_kegiatan"])): ?>
 						<p class="form-feedback-error" role="alert"><?= htmlspecialchars($activityErrors["lokasi_kegiatan"], ENT_QUOTES, "UTF-8") ?></p>
@@ -384,7 +419,14 @@ switch ($programStudi) {
 
 				<div class="form-group">
 					<label for="deskripsi-kegiatan">Deskripsi Kegiatan</label><br />
-					<textarea class="input-form" id="deskripsi-kegiatan" name="deskripsi_kegiatan" rows="5" maxlength="1000" required><?= htmlspecialchars($activityOld["deskripsi_kegiatan"] ?? "", ENT_QUOTES, "UTF-8") ?></textarea>
+
+					<textarea
+						class="input-form"
+						id="deskripsi-kegiatan"
+						name="deskripsi_kegiatan"
+						rows="5"
+						maxlength="1000"
+						required><?= htmlspecialchars($activityOld["deskripsi_kegiatan"] ?? "", ENT_QUOTES, "UTF-8") ?></textarea>
 					<?php if (isset($activityErrors["deskripsi_kegiatan"])): ?>
 						<p class="form-feedback-error" role="alert"><?= htmlspecialchars($activityErrors["deskripsi_kegiatan"], ENT_QUOTES, "UTF-8") ?></p>
 					<?php endif; ?>
@@ -402,7 +444,9 @@ switch ($programStudi) {
 					<p><strong>Kategori Kegiatan:</strong> <?= htmlspecialchars($activityResult["kategori_kegiatan"], ENT_QUOTES, "UTF-8") ?></p>
 					<p><strong>Tanggal Pelaksanaan:</strong> <?= htmlspecialchars($activityResult["tanggal_pelaksanaan"], ENT_QUOTES, "UTF-8") ?></p>
 					<p><strong>Lokasi Kegiatan:</strong> <?= htmlspecialchars($activityResult["lokasi_kegiatan"], ENT_QUOTES, "UTF-8") ?></p>
-					<p><strong>Deskripsi Kegiatan:</strong><br /><?= nl2br(htmlspecialchars($activityResult["deskripsi_kegiatan"], ENT_QUOTES, "UTF-8")) ?></p>
+					<p><strong>Deskripsi Kegiatan:</strong>
+						<?= nl2br(htmlspecialchars($activityResult["deskripsi_kegiatan"], ENT_QUOTES, "UTF-8")) ?>
+					</p>
 				</article>
 			<?php endif; ?>
 		</section>
