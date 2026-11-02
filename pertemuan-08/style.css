@@ -226,6 +226,23 @@ footer p {
   color: #2e7d32;
 }
 
+#rencana-kegiatan .form-feedback-error,
+#rencana-kegiatan .form-feedback-success {
+  padding: 10px 12px;
+  margin: 10px 0;
+  border-left: 3px solid currentColor;
+  font-weight: bold;
+  line-height: 1.5;
+}
+
+#rencana-kegiatan .form-feedback-error {
+  background-color: #fff1f0;
+}
+
+#rencana-kegiatan .form-feedback-success {
+  background-color: #edf7ed;
+}
+
 /* Layout untuk viewport yang lebih lebar */
 @media (min-width: 768px) {
   nav {
