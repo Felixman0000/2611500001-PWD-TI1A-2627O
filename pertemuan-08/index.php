@@ -279,9 +279,46 @@ switch ($programStudi) {
 				</article>
 			<?php endif; ?>
 		</section>
+
 		<section id="rencana-kegiatan">
-			<h2>Rencana Kegiatan</h2>
-			
+			<h2>Rencana Kegiatan Mahasiswa</h2>
+
+			<form id="Form Rencana Kegiatan Mahasiswa" action="index.php" method="post" novalidate>
+				<div class="form-group">
+					<label for="nama-kegiatan">Nama Kegiatan</label><br />
+					<input class="input-form" type="text" id="nama-kegiatan" name="nama_kegiatan" required />
+				</div>
+
+				<div class="form-group">
+					<label for="kategori-kegiatan">Kategori Kegiatan</label><br />
+					<select class="input-form" id="kategori-kegiatan" name="kategori_kegiatan" required>
+						<option value="">-- Pilih Kategori --</option>
+						<option value="akademik">Akademik</option>
+						<option value="organisasi">Organisasi</option>
+						<option value="sosial">Sosial</option>
+						<option value="olahraga">Olahraga</option>
+						<option value="lainnya">Lainnya</option>
+					</select>
+				</div>
+
+				<div class="form-group">
+					<label for="tanggal-pelaksanaan">Tanggal Pelaksanaan</label><br />
+					<input class="input-form" type="date" id="tanggal-pelaksanaan" name="tanggal_pelaksanaan" required />
+				</div>
+
+				<div class="form-group">
+					<label for="lokasi-kegiatan">Lokasi Kegiatan</label><br />
+					<input class="input-form" type="text" id="lokasi-kegiatan" name="lokasi_kegiatan" required />
+				</div>
+
+				<div class="form-group">
+					<label for="deskripsi-kegiatan">Deskripsi Kegiatan</label><br />
+					<textarea class="input-form" id="deskripsi-kegiatan" name="deskripsi_kegiatan" rows="5" required></textarea>
+				</div>
+
+				<button type="submit">Kirim Rencana</button>
+				<button type="reset">Batal</button>
+			</form>
 		</section>
 	</main>
 

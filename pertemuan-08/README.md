@@ -21,4 +21,5 @@ P8 melanjutkan halaman profil mahasiswa dari P6 dengan mempelajari pengiriman da
 - **Beranda** menampilkan pengenalan mahasiswa dan mata kuliah.
 - **Tentang Saya** menampilkan program studi, status, informasi semester, IPK, target belajar, dan contoh perulangan.
 - **Kontak** menyediakan formulir dengan metode `POST`. Data wajib diisi sesuai aturan validasi sebelum ditampilkan kembali.
+- **Rencana Mahasiswa** menampilkan
 - Navigasi dapat dibuka dan ditutup pada tampilan yang lebih kecil menggunakan JavaScript.
