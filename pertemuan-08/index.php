@@ -103,11 +103,11 @@ $activityErrors = $_SESSION["rencana_kegiatan_errors"] ?? [];
 $activityOld = $_SESSION["rencana_kegiatan_old"] ?? [];
 $activityResult = isset($_SESSION["nama_kegiatan"])
 	? [
-	$_SESSION["nama_kegiatan"]  = $namaKegiatan ?? "",
-	$_SESSION["kategori_kegiatan"] = $kategoriKegiatan ?? "",
-	$_SESSION["tanggal_pelaksanaan"] = $tanggalPelaksanaan ?? "",
-	$_SESSION["lokasi_kegiatan"] = $lokasiKegiatan ?? "",
-	$_SESSION["deskripsi_kegiatan"] = $deskripsiKegiatan ?? "",
+		"nama_kegiatan" => $_SESSION["nama_kegiatan"],
+		"kategori_kegiatan" => $_SESSION["kategori_kegiatan"] ?? "",
+		"tanggal_pelaksanaan" => $_SESSION["tanggal_pelaksanaan"] ?? "",
+		"lokasi_kegiatan" => $_SESSION["lokasi_kegiatan"] ?? "",
+		"deskripsi_kegiatan" => $_SESSION["deskripsi_kegiatan"] ?? "",
 	]
 	: null;
 unset($_SESSION["rencana_kegiatan_errors"], $_SESSION["rencana_kegiatan_old"]);
