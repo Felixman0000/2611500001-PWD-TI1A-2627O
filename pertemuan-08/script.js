@@ -126,3 +126,94 @@ contactForms.forEach((contactForm) => {
     }
   });
 });
+
+const activityForms = document.querySelectorAll(
+  'form[data-validation="activity"]',
+);
+
+activityForms.forEach((activityForm) => {
+  const formFeedback = activityForm.querySelector("[data-form-feedback]");
+  const fields = {
+    nama: activityForm.elements.namedItem("nama_kegiatan"),
+    kategori: activityForm.elements.namedItem("kategori_kegiatan"),
+    tanggal: activityForm.elements.namedItem("tanggal_pelaksanaan"),
+    lokasi: activityForm.elements.namedItem("lokasi_kegiatan"),
+    deskripsi: activityForm.elements.namedItem("deskripsi_kegiatan"),
+  };
+
+  const showError = (message, field) => {
+    if (formFeedback) {
+      formFeedback.textContent = message;
+      formFeedback.className = "form-feedback-error";
+    }
+    field.focus();
+  };
+
+  const clearFeedback = () => {
+    if (formFeedback) {
+      formFeedback.textContent = "";
+      formFeedback.className = "form-feedback";
+    }
+  };
+
+  activityForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const nama = fields.nama.value.trim();
+    const kategori = fields.kategori.value;
+    const tanggal = fields.tanggal.value;
+    const parsedTanggal = new Date(tanggal);
+    const lokasi = fields.lokasi.value.trim();
+    const deskripsi = fields.deskripsi.value.trim();
+    const allowedCategories = [
+      "akademik",
+      "organisasi",
+      "sosial",
+      "olahraga",
+      "lainnya",
+    ];
+
+    clearFeedback();
+
+    if (nama.length === 0 || nama.length > 100) {
+      showError(
+        "Nama kegiatan wajib diisi dan maksimal 100 karakter.",
+        fields.nama,
+      );
+      return;
+    }
+
+    if (!allowedCategories.includes(kategori)) {
+      showError("Pilih kategori kegiatan yang tersedia.", fields.kategori);
+      return;
+    }
+
+    if (
+      !/^\d{4}-\d{2}-\d{2}$/.test(tanggal) ||
+      Number.isNaN(parsedTanggal.getTime()) ||
+      parsedTanggal.toISOString().slice(0, 10) !== tanggal
+    ) {
+      showError("Masukkan tanggal pelaksanaan yang valid.", fields.tanggal);
+      return;
+    }
+
+    if (lokasi.length === 0 || lokasi.length > 150) {
+      showError("Lokasi wajib diisi dan maksimal 150 karakter.", fields.lokasi);
+      return;
+    }
+
+    if (deskripsi.length === 0 || deskripsi.length > 1000) {
+      showError(
+        "Deskripsi wajib diisi dan maksimal 1000 karakter.",
+        fields.deskripsi,
+      );
+      return;
+    }
+
+    HTMLFormElement.prototype.submit.call(activityForm);
+  });
+
+  activityForm.addEventListener("reset", clearFeedback);
+  activityForm.addEventListener("input", clearFeedback);
+  activityForm.addEventListener("change", clearFeedback);
+});
