@@ -144,14 +144,16 @@ section {
 }
 
 /* Bagian Kontak */
-#contact {
+#contact,
+#rencana-kegiatan {
   background-color: #f8fafc;
   border: 1px solid #cbd5e1;
   padding: 20px;
   margin: 0;
 }
 
-#contact h2 {
+#contact h2,
+#rencana-kegiatan h2 {
   color: #003366;
   border-bottom: 2px solid #003366;
   padding-bottom: 6px;
@@ -163,7 +165,8 @@ section {
   margin: 12px 0;
 }
 
-#contact label {
+#contact label,
+#rencana-kegiatan label {
   color: #1f2937;
   font-weight: bold;
 }
@@ -180,12 +183,14 @@ section {
   border: 1px solid #94a3b8;
 }
 
-#contact textarea {
+#contact textarea,
+#rencana-kegiatan textarea {
   min-height: 80px;
   resize: vertical;
 }
 
-#contact button {
+#contact button,
+#rencana-kegiatan button {
   background-color: #003366;
   color: #ffffff;
   font-weight: bold;
@@ -234,7 +239,8 @@ footer p {
     grid-template-columns: 1fr 1fr;
   }
 
-  #contact {
+  #contact,
+  #rencana-kegiatan {
     grid-column: 1 / -1;
   }
 
