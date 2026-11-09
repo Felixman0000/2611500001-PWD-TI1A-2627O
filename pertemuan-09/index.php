@@ -383,7 +383,7 @@ switch ($programStudi) {
 							$displayValue = nl2br($displayValue);
 						}
 						?>
-						<p><strong><?= bersihkan($label) ?>:</strong> <?= $displayValue ?></p>
+						<p><?= tebal($label . ":") ?> <?= $displayValue ?></p>
 					<?php endforeach; ?>
 				</article>
 			<?php endif; ?>

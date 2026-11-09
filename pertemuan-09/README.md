@@ -42,3 +42,11 @@ Form Kontak berhasil dikirim dan hasil delapan field tampil. Checkbox `minat[]` 
 - Array asosiatif menggunakan key bernama seperti `['nama']`. Array multidimensi menyimpan array lain sebagai elemen, sehingga dapat digunakan untuk mengelompokkan beberapa struktur data.
 - Fungsi custom didefinisikan dengan `function`, menerima parameter di dalam tanda kurung, dan menggunakan `return` untuk mengembalikan nilai. Hindari nama yang sudah dipakai fungsi bawaan PHP.
 - `include` menampilkan warning bila file tidak ditemukan tetapi eksekusi berlanjut. `require` menghentikan eksekusi jika file tidak ditemukan.
+
+## Demo Opsional: Fungsi `tebal()`
+
+Fungsi `tebal($teks)` pada `fungsi.php` mengembalikan teks di dalam elemen `<strong>`. Fungsi ini digunakan untuk menampilkan label hasil Kontak dengan huruf tebal. Teks label tetap dilewatkan ke `bersihkan()` sebelum dibungkus HTML.
+
+### Pengujian
+
+Setelah halaman P9 dimuat ulang, label pada hasil Kontak tetap tampil tebal dan nilai formulir tetap tampil normal.
