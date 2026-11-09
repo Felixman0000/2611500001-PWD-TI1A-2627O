@@ -27,3 +27,18 @@ Fungsi `bersihkan()` dipindahkan ke `fungsi.php`, yang diawali dengan `<?php`. `
 ### Pengujian
 
 Halaman utama P9 berhasil dimuat setelah pemindahan. Uji dari file terpisah juga berhasil meng-include `fungsi.php` dan memanggil `bersihkan()`; markup uji tampil sebagai teks, bukan sebagai elemen HTML. File pengujian sementara sudah dihapus.
+
+## Langkah 4 - Session Formulir sebagai Array
+
+Data formulir Kontak disimpan dalam satu `$_SESSION["form_data"]` yang berisi array asosiatif. Key mengikuti atribut `name` pada form: `nama`, `email`, `semester`, `tanggal`, `jenis_pesan`, `minat`, `prodi`, dan `pesan`. Hasilnya ditampilkan dengan `foreach` dan array label. Data session lama yang masih terpisah dibersihkan ketika form Kontak dikirim.
+
+### Pengujian
+
+Form Kontak berhasil dikirim dan hasil delapan field tampil. Checkbox `minat[]` ditampilkan sebagai daftar yang dipisahkan koma, dan baris baru pada pesan tetap ditampilkan. Halaman menggunakan pola Post-Redirect-Get.
+
+## Konsep yang Dipraktikkan
+
+- Array terindeks menggunakan nomor urut seperti `[0]` dan `[1]`; `count()` dapat menghitung jumlah elemennya.
+- Array asosiatif menggunakan key bernama seperti `['nama']`. Array multidimensi menyimpan array lain sebagai elemen, sehingga dapat digunakan untuk mengelompokkan beberapa struktur data.
+- Fungsi custom didefinisikan dengan `function`, menerima parameter di dalam tanda kurung, dan menggunakan `return` untuk mengembalikan nilai. Hindari nama yang sudah dipakai fungsi bawaan PHP.
+- `include` menampilkan warning bila file tidak ditemukan tetapi eksekusi berlanjut. `require` menghentikan eksekusi jika file tidak ditemukan.
