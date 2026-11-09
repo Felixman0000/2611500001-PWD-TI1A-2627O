@@ -1,102 +1,219 @@
+// Navigasi responsif.
 const navToggle = document.getElementById("navToggle");
 const navMenu = document.getElementById("navMenu");
 
-navToggle.addEventListener("click", () => {
-  const isOpen = navMenu.classList.toggle("nav-open");
+if (navToggle && navMenu) {
+  navToggle.addEventListener("click", () => {
+    const isOpen = navMenu.classList.toggle("nav-open");
+    navToggle.setAttribute("aria-expanded", String(isOpen));
+    navToggle.setAttribute(
+      "aria-label",
+      isOpen ? "Tutup navigasi" : "Buka navigasi",
+    );
+  });
+}
 
-  navToggle.setAttribute("aria-expanded", isOpen);
+// Validasi formulir Kontak.
+// Selector menggunakan atribut/class, bukan ID formulir tertentu,
+// sehingga formulir lain dapat ditambahkan dengan ID yang berbeda.
+const contactForms = document.querySelectorAll(
+  'form[data-validation="contact"]',
+);
 
-  if (isOpen) {
-    navToggle.setAttribute("aria-label", "Tutup navigasi");
-  } else {
-    navToggle.setAttribute("aria-label", "Buka navigasi");
-  }
+contactForms.forEach((contactForm) => {
+  const formFeedback = contactForm.querySelector("[data-form-feedback]");
+
+  const ambilInput = (nama) => contactForm.elements.namedItem(nama);
+
+  contactForm.addEventListener("submit", (event) => {
+    // Mencegah pengiriman otomatis sebelum seluruh validasi selesai.
+    event.preventDefault();
+
+    const namaInput = ambilInput("nama");
+    const emailInput = ambilInput("email");
+    const semesterInput = ambilInput("semester");
+    const tanggalInput = ambilInput("tanggal");
+    const prodiInput = ambilInput("prodi");
+    const pesanInput = ambilInput("pesan");
+    const jenisPesan = contactForm.querySelector(
+      'input[name="jenis_pesan"]:checked',
+    );
+    const topikDipilih = contactForm.querySelectorAll(
+      'input[name="minat[]"]:checked',
+    );
+
+    const nama = namaInput.value.trim();
+    const email = emailInput.value.trim();
+    const semester = Number(semesterInput.value);
+    const tanggal = tanggalInput.value;
+    const prodi = prodiInput.value;
+    const pesan = pesanInput.value.trim();
+
+    const tampilkanKesalahan = (pesanKesalahan) => {
+      if (formFeedback) {
+        formFeedback.textContent = pesanKesalahan;
+        formFeedback.className = "form-feedback-error";
+      }
+    };
+
+    if (formFeedback) {
+      formFeedback.textContent = "";
+      formFeedback.className = "form-feedback";
+    }
+
+    if (nama.length < 3 || nama.length > 50) {
+      tampilkanKesalahan("Nama lengkap harus diisi 3 sampai 50 karakter.");
+      return;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      tampilkanKesalahan("Masukkan alamat email yang valid.");
+      return;
+    }
+
+    if (
+      semesterInput.value.trim() === "" ||
+      !Number.isInteger(semester) ||
+      semester < 1 ||
+      semester > 14
+    ) {
+      tampilkanKesalahan("Semester harus diisi dengan angka 1 sampai 14.");
+      return;
+    }
+
+    if (tanggal === "") {
+      tampilkanKesalahan("Tanggal kunjungan harus diisi.");
+      return;
+    }
+
+    if (!jenisPesan) {
+      tampilkanKesalahan("Pilih jenis pesan.");
+      return;
+    }
+
+    if (topikDipilih.length === 0) {
+      tampilkanKesalahan("Pilih minimal satu topik yang diminati.");
+      return;
+    }
+
+    if (prodi === "") {
+      tampilkanKesalahan("Pilih program studi.");
+      return;
+    }
+
+    if (pesan.length === 0 || pesan.length > 300) {
+      tampilkanKesalahan("Pesan harus diisi dan maksimal 300 karakter.");
+      return;
+    }
+
+    // Mengirim formulir setelah seluruh validasi JavaScript berhasil.
+    // HTMLFormElement.submit() tidak memicu event submit kembali.
+    contactForm.submit();
+  });
+
+  contactForm.addEventListener("reset", () => {
+    if (formFeedback) {
+      formFeedback.textContent = "";
+      formFeedback.className = "form-feedback";
+    }
+  });
+
+  contactForm.addEventListener("input", () => {
+    if (formFeedback) {
+      formFeedback.textContent = "";
+      formFeedback.className = "form-feedback";
+    }
+  });
 });
 
-const contactForm = document.getElementById("contactForm");
-const formFeedback = document.getElementById("formFeedback");
+const activityForms = document.querySelectorAll(
+  'form[data-validation="activity"]',
+);
 
-const namaInput = document.getElementById("nama");
-const emailInput = document.getElementById("email");
-const semesterInput = document.getElementById("semester");
-const tanggalInput = document.getElementById("tanggal");
-const prodiInput = document.getElementById("prodi");
-const pesanInput = document.getElementById("pesan");
+activityForms.forEach((activityForm) => {
+  const formFeedback = activityForm.querySelector("[data-form-feedback]");
+  const fields = {
+    nama: activityForm.elements.namedItem("nama_kegiatan"),
+    kategori: activityForm.elements.namedItem("kategori_kegiatan"),
+    tanggal: activityForm.elements.namedItem("tanggal_pelaksanaan"),
+    lokasi: activityForm.elements.namedItem("lokasi_kegiatan"),
+    deskripsi: activityForm.elements.namedItem("deskripsi_kegiatan"),
+  };
 
-contactForm.addEventListener("submit", (event) => {
-  event.preventDefault();
+  const showError = (message, field) => {
+    if (formFeedback) {
+      formFeedback.textContent = message;
+      formFeedback.className = "form-feedback-error";
+    }
+    field.focus();
+  };
 
-  const nama = namaInput.value.trim();
-  const email = emailInput.value.trim();
-  const semester = Number(semesterInput.value);
-  const tanggal = tanggalInput.value;
-  const jenisPesan = document.querySelector(
-    'input[name="jenis_pesan"]:checked',
-  );
-  const topikDipilih = document.querySelectorAll(
-    'input[name="minat"]:checked,input[name="minat[]"]:checked',
-  );
-  const prodi = prodiInput.value;
-  const pesan = pesanInput.value.trim();
+  const clearFeedback = () => {
+    if (formFeedback) {
+      formFeedback.textContent = "";
+      formFeedback.className = "form-feedback";
+    }
+  };
 
-  formFeedback.className = "form-feedback-error";
+  activityForm.addEventListener("submit", (event) => {
+    event.preventDefault();
 
-  if (nama.length < 3 || nama.length > 50) {
-    formFeedback.textContent = "Nama lengkap harus diisi 3 sampai 50 karakter.";
-    return;
-  }
+    const nama = fields.nama.value.trim();
+    const kategori = fields.kategori.value;
+    const tanggal = fields.tanggal.value;
+    const parsedTanggal = new Date(tanggal);
+    const lokasi = fields.lokasi.value.trim();
+    const deskripsi = fields.deskripsi.value.trim();
+    const allowedCategories = [
+      "akademik",
+      "organisasi",
+      "sosial",
+      "olahraga",
+      "lainnya",
+    ];
 
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    clearFeedback();
 
-  if (!emailPattern.test(email)) {
-    formFeedback.textContent = "Masukkan alamat email yang valid.";
-    return;
-  }
+    if (nama.length === 0 || nama.length > 100) {
+      showError(
+        "Nama kegiatan wajib diisi dan maksimal 100 karakter.",
+        fields.nama,
+      );
+      return;
+    }
 
-  if (semesterInput.value === "" || semester < 1 || semester > 14) {
-    formFeedback.textContent = "Semester harus diisi dengan angka 1 sampai 14.";
-    return;
-  }
+    if (!allowedCategories.includes(kategori)) {
+      showError("Pilih kategori kegiatan yang tersedia.", fields.kategori);
+      return;
+    }
 
-  if (tanggal === "") {
-    formFeedback.textContent = "Tanggal kunjungan harus diisi.";
-    return;
-  }
+    if (
+      !/^\d{4}-\d{2}-\d{2}$/.test(tanggal) ||
+      Number.isNaN(parsedTanggal.getTime()) ||
+      parsedTanggal.toISOString().slice(0, 10) !== tanggal
+    ) {
+      showError("Masukkan tanggal pelaksanaan yang valid.", fields.tanggal);
+      return;
+    }
 
-  if (!jenisPesan) {
-    formFeedback.textContent = "Pilih jenis pesan.";
-    return;
-  }
+    if (lokasi.length === 0 || lokasi.length > 150) {
+      showError("Lokasi wajib diisi dan maksimal 150 karakter.", fields.lokasi);
+      return;
+    }
 
-  if (topikDipilih.length === 0) {
-    formFeedback.textContent = "Pilih minimal satu topik yang diminati.";
-    return;
-  }
+    if (deskripsi.length === 0 || deskripsi.length > 1000) {
+      showError(
+        "Deskripsi wajib diisi dan maksimal 1000 karakter.",
+        fields.deskripsi,
+      );
+      return;
+    }
 
-  if (prodi === "") {
-    formFeedback.textContent = "Pilih program studi.";
-    return;
-  }
+    HTMLFormElement.prototype.submit.call(activityForm);
+  });
 
-  if (pesan.length === 0) {
-    formFeedback.textContent = "Pesan harus diisi.";
-    return;
-  }
-
-  if (pesan.length > 300) {
-    formFeedback.textContent = "Pesan maksimal 300 karakter.";
-    return;
-  }
-
-  formFeedback.textContent = "Form berhasil divalidasi.";
-  formFeedback.className = "form-feedback-success";
-  contactForm.submit();
-});
-
-contactForm.addEventListener("reset", () => {
-  formFeedback.textContent = "";
-});
-
-contactForm.addEventListener("input", () => {
-  formFeedback.textContent = "";
+  activityForm.addEventListener("reset", clearFeedback);
+  activityForm.addEventListener("input", clearFeedback);
+  activityForm.addEventListener("change", clearFeedback);
 });

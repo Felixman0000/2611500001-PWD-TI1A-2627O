@@ -3,15 +3,6 @@ session_start();
 
 if (
 	$_SERVER["REQUEST_METHOD"] === "POST" &&
-	($_POST["form_type"] ?? "") === "activity"
-) {
-	$namaKegiatan = trim((string) ($_POST["nama_kegiatan"] ?? ""));
-	$kategoriKegiatan = trim((string) ($_POST["kategori_kegiatan"] ?? ""));
-	$tanggalPelaksanaan = trim((string) ($_POST["tanggal_pelaksanaan"] ?? ""));
-	$lokasiKegiatan = trim((string) ($_POST["lokasi_kegiatan"] ?? ""));
-	$deskripsiKegiatan = trim((string) ($_POST["deskripsi_kegiatan"] ?? ""));
-
-	$activityData = [
 		"nama_kegiatan" => $namaKegiatan,
 		"kategori_kegiatan" => $kategoriKegiatan,
 		"tanggal_pelaksanaan" => $tanggalPelaksanaan,
