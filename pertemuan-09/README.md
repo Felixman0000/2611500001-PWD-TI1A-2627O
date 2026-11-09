@@ -19,3 +19,11 @@ Fungsi custom `bersihkan($teks)` ditambahkan ke `index.php`. Fungsi mengembalika
 ### Pengujian
 
 Uji lokal memakai `<h1>Judul uji</h1><script>alert('hi')</script>`. Tanpa `bersihkan()`, browser menampilkan judul sebagai heading dan menjalankan alert. Dengan `bersihkan()`, seluruh markup tampil sebagai teks dan tidak dijalankan. File uji sementara sudah dihapus setelah pengujian. Halaman utama P9 dimuat kembali tanpa error.
+
+## Langkah 3 - Modularisasi Fungsi
+
+Fungsi `bersihkan()` dipindahkan ke `fungsi.php`, yang diawali dengan `<?php`. `index.php` memuatnya menggunakan `include 'fungsi.php';`.
+
+### Pengujian
+
+Halaman utama P9 berhasil dimuat setelah pemindahan. Uji dari file terpisah juga berhasil meng-include `fungsi.php` dan memanggil `bersihkan()`; markup uji tampil sebagai teks, bukan sebagai elemen HTML. File pengujian sementara sudah dihapus.
