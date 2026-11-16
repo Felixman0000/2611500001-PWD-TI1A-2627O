@@ -42,9 +42,9 @@ Untuk rancangan P10 yang menggunakan satu tabel, nilai larik `minat` direpresent
 
 Representasi satu kolom ini menyederhanakan praktik penyimpanan sesuai ruang lingkup P10. Menyimpan beberapa pilihan dalam satu kolom bukan normalisasi basis data yang ideal; pendekatan ini digunakan untuk kebutuhan pembelajaran.
 
-## Menentukan Atribut dan Tipe Data
+## D.4 - Memeriksa Rancangan Struktur Tabel
 
-Berdasarkan delapan data formulir Kontak dan satu kolom identitas otomatis, rancangan kolom untuk tabel `tbl_kontak_2611500001` adalah sebagai berikut:
+Berdasarkan hasil perancangan sebelumnya, struktur akhir tabel `tbl_kontak_2611500001` terdiri atas satu kolom identitas dan delapan atribut dari formulir Kontak:
 
 | No. | Atribut       | Tipe data      | Ketentuan                       | Keterangan                                                                              |
 | --- | ------------- | -------------- | ------------------------------- | --------------------------------------------------------------------------------------- |
@@ -61,6 +61,8 @@ Berdasarkan delapan data formulir Kontak dan satu kolom identitas otomatis, ranc
 `VARCHAR(n)` digunakan untuk teks dengan panjang maksimal `n` karakter, `TINYINT` untuk bilangan bulat berukuran kecil, dan `DATE` untuk nilai tanggal. Nama kolom mengikuti atribut `name` pada form; khusus `minat[]`, tanda kurung siku menandakan nilai masukan berupa larik, sedangkan nama kolom penyimpanannya adalah `minat`.
 
 **Hasil pemeriksaan:** ukuran `nama` dan `pesan` sesuai dengan `maxlength` pada form. Rentang semester 1–14 dapat disimpan dengan `TINYINT`; pilihan `jenis_pesan`, gabungan topik `minat`, dan kode `prodi` juga muat pada panjang `VARCHAR` yang ditentukan. Input email saat ini belum menetapkan `maxlength`; `VARCHAR(255)` adalah kapasitas kolom yang dipilih untuk rancangan P10, sehingga validasi panjang aplikasi perlu ditambahkan saat penyimpanan ke basis data diterapkan.
+
+**Hasil pemeriksaan akhir:** tabel berisi sembilan atribut. Delapan atribut formulir (`nama`, `email`, `semester`, `tanggal`, `jenis_pesan`, `minat`, `prodi`, dan `pesan`) sudah terwakili dengan tipe data sesuai karakteristik nilainya. Hanya `id` yang ditetapkan sebagai `PRIMARY KEY` dan `AUTO_INCREMENT`; `id` bukan data yang dikirim dari formulir.
 
 ## Menentukan Primary Key dan `AUTO_INCREMENT`
 
