@@ -74,3 +74,34 @@ VALUES ('Uji INSERT P10', 'uji.insert@example.com', 1, '2026-11-16', 'pertanyaan
 Nama tabel sesuai dengan tabel yang dibuat. Daftar atribut berisi delapan kolom data selain `id`, yang diisi otomatis oleh `AUTO_INCREMENT`. Klausa `VALUES` menyediakan delapan nilai dengan urutan yang sama seperti daftar kolom: nama, email, semester, tanggal, jenis pesan, minat, program studi, dan pesan.
 
 **Hasil pengujian:** MySQL mengonfirmasi `1 row inserted` dengan `Inserted row id: 2`. Setelah itu, pemeriksaan `SELECT * FROM tbl_kontak_2611500001` menunjukkan dua baris total dan record baru berisi `Uji INSERT P10`, `uji.insert@example.com`, semester `1`, tanggal `2026-11-16`, jenis pesan `pertanyaan`, minat `HTML, CSS`, prodi `TI`, dan pesan `Pengujian perintah INSERT`. Hasil ini memastikan tabel, jumlah kolom dan nilai, urutan data, serta pembuatan `id` otomatis sesuai.
+
+## F.3 - Memeriksa Data Menggunakan Fasilitas Browse
+
+Tabel `tbl_kontak_2611500001` dibuka melalui tab **Browse** di phpMyAdmin. Hasilnya menampilkan dua baris dengan sembilan atribut (`id` dan delapan kolom data). Baris pertama tetap memiliki `id=1`; baris uji yang ditambahkan pada F.1 tampil sebagai berikut:
+
+| Kolom         | Nilai yang ditampilkan      |
+| ------------- | --------------------------- |
+| `id`          | `2`                         |
+| `nama`        | `Uji INSERT P10`            |
+| `email`       | `uji.insert@example.com`    |
+| `semester`    | `1`                         |
+| `tanggal`     | `2026-11-16`                |
+| `jenis_pesan` | `pertanyaan`                |
+| `minat`       | `HTML, CSS`                 |
+| `prodi`       | `TI`                        |
+| `pesan`       | `Pengujian perintah INSERT` |
+
+**Hasil pemeriksaan Browse:** seluruh nilai pada baris uji sesuai dengan data yang dimasukkan melalui perintah `INSERT`, tidak ada atribut yang hilang atau berubah, dan `id` otomatis bernilai `2`. Kolom `minat` ditampilkan sebagai teks `HTML, CSS`, bukan sebagai larik atau nilai terpisah. Dengan demikian, data berhasil disimpan dan dapat dibaca kembali melalui fasilitas Browse phpMyAdmin.
+
+## Memeriksa dan Memperbaiki Kesesuaian Data
+
+Pemeriksaan lanjutan pada tab **Browse** menemukan dua nilai pada record `id=1` yang tidak sesuai dengan pilihan form P9: `jenis_pesan` sebelumnya bernilai `ntalah` dan `prodi` bernilai `Ti`. Melalui fasilitas **Edit** phpMyAdmin, nilai tersebut diperbaiki menjadi `pertanyaan` dan `TI`. phpMyAdmin mengonfirmasi `1 row affected` dengan perintah pembaruan hanya pada kedua kolom tersebut. Kolom lain pada record itu tidak diubah.
+
+Hasil Browse setelah perbaikan menampilkan data berikut:
+
+| `id` | `nama`           | `email`                  | `semester` | `tanggal`    | `jenis_pesan` | `minat`     | `prodi` | `pesan`                     |
+| ---- | ---------------- | ------------------------ | ---------- | ------------ | ------------- | ----------- | ------- | --------------------------- |
+| `1`  | `Ghanwen`        | `Jancok@gmail.com`       | `2`        | `2026-11-27` | `pertanyaan`  | `HTML`      | `TI`    | `pele`                      |
+| `2`  | `Uji INSERT P10` | `uji.insert@example.com` | `1`        | `2026-11-16` | `pertanyaan`  | `HTML, CSS` | `TI`    | `Pengujian perintah INSERT` |
+
+**Hasil pemeriksaan akhir:** kedua record tampil lengkap dan tidak ada nilai yang hilang. Nama dan email terisi; semester `1` dan `2` berada pada rentang form `1` sampai `14`; tanggal tampil sebagai tanggal yang valid; `jenis_pesan` menggunakan pilihan `pertanyaan`; `minat` berisi `HTML` atau gabungan `HTML, CSS` sebagai teks; dan `prodi` menggunakan kode `TI`. Kedua pesan berupa teks, tidak kosong, dan panjangnya tidak melebihi batas 300 karakter. Nilai `id` tetap unik (`1` dan `2`) dan `id=2` terbentuk otomatis saat `INSERT` dilakukan. Data pada record kedua tidak berubah selama perbaikan record pertama.
