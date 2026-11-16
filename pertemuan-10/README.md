@@ -2,6 +2,13 @@
 
 ## Ringkasan
 
+## Menentukan Nama Basis Data dan Tabel
+
+NIM mahasiswa yang digunakan pada P10 adalah `2611500001`, sesuai nilai NIM pada `index.php`. Dengan pola penamaan `db_pwd_<NIM>` untuk basis data dan `tbl_kontak_<NIM>` untuk tabel, nama yang digunakan adalah:
+
+- Nama basis data: `db_pwd_2611500001`
+- Nama tabel: `tbl_kontak_2611500001`
+
 ## Menentukan Data yang Akan Disimpan ke Basis Data
 
 Data yang direncanakan untuk disimpan ke basis data dibatasi pada delapan nilai yang dikirim melalui form Kontak di `index.php`: nama lengkap, email, semester, tanggal kunjungan, jenis pesan, topik yang diminati, program studi, dan pesan. Pemeriksaan menunjukkan setiap data sesuai dengan atribut `name` dan elemen formulir berikut:
@@ -21,7 +28,7 @@ Data yang direncanakan untuk disimpan ke basis data dibatasi pada delapan nilai 
 
 Informasi profil seperti NIM (`$nim`), nama mahasiswa (`$namaMahasiswa`), dan program studi profil (`$programStudi`) tidak dikirim dari form Kontak, sehingga tidak termasuk data formulir yang dianalisis untuk disimpan. Field Program Studi pada tabel adalah nilai pilihan `prodi` yang dikirim secara terpisah dari form Kontak.
 
-## C.3 - Menangani Field `minat` dengan Beberapa Pilihan
+## Menangani Field `minat` dengan Beberapa Pilihan
 
 **Hasil pemeriksaan:** kedua checkbox topik pada form Kontak di `index.php` menggunakan atribut `name="minat[]"`. Checkbox HTML memiliki `value="HTML"`, sedangkan checkbox CSS memiliki `value="CSS"`. Tanda kurung siku pada atribut `name` membuat pilihan yang dikirim PHP diterima sebagai larik, misalnya `["HTML", "CSS"]` saat kedua topik dipilih.
 
