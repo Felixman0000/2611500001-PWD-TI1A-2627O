@@ -1,107 +1,79 @@
 # P10 - Analisis Kebutuhan Data dan Dasar MySQL
 
-## Ringkasan
+Pada pertemuan 10, kebutuhan data untuk basis data ditentukan berdasarkan delapan field formulir Kontak P9, tanpa memasukkan informasi profil mahasiswa. NIM yang digunakan adalah `2611500001`, sesuai nilai NIM pada `index.php`. Dengan pola penamaan `db_pwd_<NIM>` untuk basis data dan `tbl_kontak_<NIM>` untuk tabel, basis data yang digunakan bernama `db_pwd_2611500001` dan tabelnya bernama `tbl_kontak_2611500001`. Rancangan tabel terdiri atas sembilan atribut, yaitu delapan data dari formulir dan kolom `id` sebagai `INT PRIMARY KEY AUTO_INCREMENT`.
 
-Pada P10, kebutuhan data untuk basis data ditentukan berdasarkan delapan field formulir Kontak P9, tanpa memasukkan informasi profil mahasiswa. Basis data dan tabel menggunakan NIM sebagai pembeda, yaitu `db_pwd_2611500001` dan `tbl_kontak_2611500001`. Rancangan tabel terdiri atas sembilan atribut: delapan data formulir dan `id` sebagai `INT PRIMARY KEY AUTO_INCREMENT`. Field `minat[]` disimpan sebagai teks dalam satu kolom dengan pilihan dipisahkan koma, sesuai ruang lingkup latihan.
+Delapan data formulir yang direncanakan untuk disimpan adalah nama lengkap, email, semester, tanggal kunjungan, jenis pesan, topik yang diminati, program studi, dan pesan. Pada `index.php`, nama lengkap dikirim melalui input teks dengan atribut `name="nama"`, email menggunakan `name="email"` pada input bertipe email, semester menggunakan `name="semester"` pada input angka, dan tanggal kunjungan menggunakan `name="tanggal"` pada input tanggal. Jenis pesan dikirim melalui dua pilihan radio dengan atribut `name="jenis_pesan"`, sedangkan topik yang diminati dipilih melalui checkbox `name="minat[]"`. Program studi dipilih melalui elemen `<select>` bernama `prodi`, sementara isi pesan dikirim melalui elemen `<textarea>` bernama `pesan`. Delapan nama data tersebut sesuai dengan key yang dibaca PHP untuk `$_SESSION["form_data"]`. Informasi profil seperti NIM (`$nim`), nama mahasiswa (`$namaMahasiswa`), dan program studi profil (`$programStudi`) tidak dikirim melalui form Kontak sehingga tidak termasuk ke dalam data formulir.
 
-## Menentukan Nama Basis Data dan Tabel
+Delapan atribut yang berasal dari form Kontak adalah:
 
-NIM mahasiswa yang digunakan pada P10 adalah `2611500001`, sesuai nilai NIM pada `index.php`. Dengan pola penamaan `db_pwd_<NIM>` untuk basis data dan `tbl_kontak_<NIM>` untuk tabel, basis data yang digunakan bernama `db_pwd_2611500001`, sedangkan tabelnya bernama `tbl_kontak_2611500001`.
+- `nama`: nama lengkap pengguna.
+- `email`: alamat email pengguna.
+- `semester`: nomor semester.
+- `tanggal`: tanggal kunjungan.
+- `jenis_pesan`: pilihan pertanyaan atau saran.
+- `minat`: pilihan HTML, CSS, atau kombinasi keduanya.
+- `prodi`: kode program studi SI atau TI.
+- `pesan`: teks pesan pengguna.
 
-## Menentukan Data yang Akan Disimpan ke Basis Data
+Checkbox minat menyediakan pilihan HTML dengan nilai `HTML` dan CSS dengan nilai `CSS`. Tanda kurung siku pada `minat[]` membuat PHP menerima pilihan sebagai larik, misalnya `["HTML", "CSS"]` ketika keduanya dipilih. Untuk kebutuhan latihan P10, nilai larik tersebut direpresentasikan sebagai teks di satu kolom `minat`, dengan pilihan dipisahkan koma. Karena itu, satu pilihan HTML tersimpan sebagai `HTML`, satu pilihan CSS tersimpan sebagai `CSS`, dan kedua pilihan tersimpan sebagai `HTML, CSS`. Penyimpanan beberapa pilihan dalam satu kolom digunakan untuk menyederhanakan praktik ini, walaupun bukan bentuk normalisasi basis data yang ideal.
 
-Data yang direncanakan untuk disimpan ke basis data dibatasi pada delapan nilai yang dikirim melalui form Kontak di `index.php`, yaitu nama lengkap, email, semester, tanggal kunjungan, jenis pesan, topik yang diminati, program studi, dan pesan. Pada formulir tersebut, nama lengkap dikirim dengan atribut `name="nama"` melalui input teks, email menggunakan `name="email"` dan input bertipe email, sedangkan semester memakai `name="semester"` dengan input angka. Tanggal kunjungan menggunakan `name="tanggal"` pada input tanggal.
+Pada tahap pemeriksaan rancangan struktur tabel, tabel `tbl_kontak_2611500001` ditetapkan memiliki sembilan atribut. Kolom `id` bertipe `INT`, berfungsi sebagai `PRIMARY KEY`, dan menggunakan `AUTO_INCREMENT` agar setiap baris mendapat identitas unik secara otomatis. Kolom `nama` memakai `VARCHAR(50)` untuk nama hingga 50 karakter, sedangkan `email` memakai `VARCHAR(255)`. Kolom `semester` memakai `TINYINT` untuk nomor semester dalam rentang 1 sampai 14, sementara `tanggal` memakai tipe `DATE`. Kolom `jenis_pesan` memakai `VARCHAR(20)` untuk pilihan `pertanyaan` atau `saran`, `minat` memakai `VARCHAR(50)` untuk menyimpan satu atau beberapa topik sebagai teks, `prodi` memakai `VARCHAR(2)` untuk kode `SI` atau `TI`, dan `pesan` memakai `VARCHAR(300)` untuk teks pesan hingga 300 karakter. Secara umum, `VARCHAR(n)` menyimpan teks sampai dengan panjang `n`, `TINYINT` menyimpan bilangan bulat berukuran kecil, dan `DATE` menyimpan nilai tanggal. Nama kolom mengikuti atribut `name` pada formulir; khusus `minat[]`, tanda kurung siku menunjukkan bahwa nilai masukan berupa larik, sedangkan nama kolomnya tetap `minat`.
 
-Jenis pesan dikirim melalui dua pilihan radio yang sama-sama menggunakan atribut `name="jenis_pesan"`. Topik yang diminati memakai checkbox bernama `minat[]`, sehingga pengguna dapat memilih lebih dari satu topik dan PHP menerimanya sebagai array. Program studi dipilih melalui elemen `<select>` dengan atribut `name="prodi"`, sementara pesan dikirim melalui elemen `<textarea>` bernama `pesan`.
+Rancangan sembilan atribut tabel dapat diringkas sebagai berikut:
 
-**Hasil pengujian:** kedelapan data tersebut cocok dengan elemen form Kontak dan key yang dibaca PHP untuk `$_SESSION["form_data"]`. Tanda kurung siku pada `minat[]` digunakan agar beberapa pilihan checkbox dikirim sebagai array.
+- `id`: `INT PRIMARY KEY AUTO_INCREMENT` sebagai identitas unik yang dibuat MySQL.
+- `nama`: `VARCHAR(50)` untuk nama lengkap.
+- `email`: `VARCHAR(255)` untuk alamat email.
+- `semester`: `TINYINT` untuk nomor semester 1 sampai 14.
+- `tanggal`: `DATE` untuk tanggal kunjungan.
+- `jenis_pesan`: `VARCHAR(20)` untuk `pertanyaan` atau `saran`.
+- `minat`: `VARCHAR(50)` untuk pilihan topik dalam bentuk teks.
+- `prodi`: `VARCHAR(2)` untuk kode `SI` atau `TI`.
+- `pesan`: `VARCHAR(300)` untuk teks pesan.
 
-Informasi profil seperti NIM (`$nim`), nama mahasiswa (`$namaMahasiswa`), dan program studi profil (`$programStudi`) tidak dikirim dari form Kontak, sehingga tidak termasuk data formulir yang dianalisis untuk disimpan. Field Program Studi pada tabel adalah nilai pilihan `prodi` yang dikirim secara terpisah dari form Kontak.
+Hasil pemeriksaan rancangan menunjukkan bahwa batas panjang nama dan pesan sesuai dengan atribut `maxlength` pada form, dan rentang semester dapat disimpan dengan `TINYINT`. Pilihan jenis pesan, gabungan topik minat, dan kode program studi juga muat pada panjang `VARCHAR` yang ditentukan. Input email belum memiliki `maxlength`, sehingga `VARCHAR(255)` merupakan kapasitas kolom yang dipilih dan validasi panjang aplikasi tetap perlu diterapkan saat penyimpanan ke basis data dilakukan. Kolom `id` bukan data yang dikirim dari formulir; primary key membedakan setiap baris, sedangkan `AUTO_INCREMENT` membuat MySQL memberikan nilai berikutnya secara otomatis, misalnya `1`, `2`, dan `3`, termasuk saat beberapa baris memiliki nama yang sama.
 
-## Menangani Field `minat` dengan Beberapa Pilihan
+Pemeriksaan awal melalui phpMyAdmin pada basis data `db_pwd_2611500001`, sebelum uji `INSERT`, menunjukkan satu record di tabel `tbl_kontak_2611500001`. Record dengan `id=1` berisi nama `Ghanwen`, email `Jancok@gmail.com`, semester `2`, tanggal `2026-11-27`, jenis pesan `ntalah`, minat `HTML`, program studi `Ti`, dan pesan `pele`. Seluruh kolom telah terisi, tanggal tersimpan dalam bentuk tanggal, semester berupa angka, dan teks berada dalam kapasitas kolom. Akan tetapi, `jenis_pesan` seharusnya bernilai `pertanyaan` atau `saran`, sedangkan `prodi` seharusnya bernilai `SI` atau `TI` dengan kapitalisasi yang sesuai. Struktur tabel tidak memiliki batasan `CHECK`, sehingga MySQL menerima nilai teks yang tidak sesuai pilihan tersebut. Pada saat pemeriksaan kode, submit form Kontak di `index.php` masih menyimpan nilai ke `$_SESSION["form_data"]` dan belum menjalankan `INSERT` ke MySQL; dengan demikian, record awal tersebut tercatat di tabel tetapi bukan hasil penyimpanan otomatis dari submit form itu.
 
-**Hasil pemeriksaan:** kedua checkbox topik pada form Kontak di `index.php` menggunakan atribut `name="minat[]"`. Checkbox HTML memiliki `value="HTML"`, sedangkan checkbox CSS memiliki `value="CSS"`. Tanda kurung siku pada atribut `name` membuat pilihan yang dikirim PHP diterima sebagai larik, misalnya `["HTML", "CSS"]` saat kedua topik dipilih.
+Sebelum diperbaiki, nilai record awal adalah:
 
-Untuk rancangan P10 yang menggunakan satu tabel, nilai larik `minat` disimpan sebagai teks dalam satu kolom dengan pilihan dipisahkan koma. Jika pengguna hanya memilih HTML, nilai yang disimpan adalah `HTML`; jika hanya memilih CSS, nilainya adalah `CSS`; sedangkan jika keduanya dipilih, nilai kolom menjadi `HTML, CSS`.
+- `id`: `1`
+- `nama`: `Ghanwen`
+- `email`: `Jancok@gmail.com`
+- `semester`: `2`
+- `tanggal`: `2026-11-27`
+- `jenis_pesan`: `ntalah` (tidak sesuai pilihan form)
+- `minat`: `HTML`
+- `prodi`: `Ti` (kapitalisasi tidak sesuai kode form)
+- `pesan`: `pele`
 
-Representasi satu kolom ini menyederhanakan praktik penyimpanan sesuai ruang lingkup P10. Menyimpan beberapa pilihan dalam satu kolom bukan normalisasi basis data yang ideal; pendekatan ini digunakan untuk kebutuhan pembelajaran.
+Pada bagian E, penambahan data diuji dengan menjalankan perintah `INSERT INTO tbl_kontak_2611500001 (nama, email, semester, tanggal, jenis_pesan, minat, prodi, pesan) VALUES ('Uji INSERT P10', 'uji.insert@example.com', 1, '2026-11-16', 'pertanyaan', 'HTML, CSS', 'TI', 'Pengujian perintah INSERT');` pada basis data `db_pwd_2611500001`. Nama tabel sesuai dengan tabel yang dibuat, dan daftar delapan atribut cocok dengan delapan nilai yang diberikan dalam urutan nama, email, semester, tanggal, jenis pesan, minat, program studi, lalu pesan. Kolom `id` sengaja tidak disertakan karena nilainya dibuat otomatis oleh `AUTO_INCREMENT`. MySQL mengonfirmasi bahwa satu baris berhasil ditambahkan dengan `id=2`. Record baru berisi nama `Uji INSERT P10`, email `uji.insert@example.com`, semester `1`, tanggal `2026-11-16`, jenis pesan `pertanyaan`, minat `HTML, CSS`, program studi `TI`, dan pesan `Pengujian perintah INSERT`.
 
-## D.4 - Memeriksa Rancangan Struktur Tabel
+Nilai yang dimasukkan untuk pengujian `INSERT` adalah:
 
-Berdasarkan hasil perancangan sebelumnya, struktur akhir tabel `tbl_kontak_2611500001` terdiri atas sembilan atribut. Atribut pertama adalah `id` bertipe `INT` yang ditetapkan sebagai `PRIMARY KEY` dan menggunakan `AUTO_INCREMENT` untuk membentuk identitas unik setiap data secara otomatis. Atribut `nama` menggunakan `VARCHAR(50)` untuk menyimpan nama lengkap hingga 50 karakter, sedangkan `email` menggunakan `VARCHAR(255)` untuk menyimpan alamat email.
+- `nama`: `Uji INSERT P10`
+- `email`: `uji.insert@example.com`
+- `semester`: `1`
+- `tanggal`: `2026-11-16`
+- `jenis_pesan`: `pertanyaan`
+- `minat`: `HTML, CSS`
+- `prodi`: `TI`
+- `pesan`: `Pengujian perintah INSERT`
 
-Atribut `semester` menggunakan `TINYINT` karena menyimpan nomor semester dalam rentang 1 sampai 14, dan `tanggal` menggunakan tipe `DATE` untuk menyimpan tanggal kunjungan. Atribut `jenis_pesan` bertipe `VARCHAR(20)` untuk menyimpan pilihan `pertanyaan` atau `saran`. Atribut `minat` menggunakan `VARCHAR(50)` agar satu atau beberapa topik dapat disimpan sebagai teks, misalnya `HTML, CSS`. Selanjutnya, `prodi` menggunakan `VARCHAR(2)` untuk menyimpan kode `SI` atau `TI`, sedangkan `pesan` menggunakan `VARCHAR(300)` untuk menyimpan isi pesan hingga 300 karakter.
+Pada pemeriksaan F.3, tabel `tbl_kontak_2611500001` dibuka melalui tab **Browse** di phpMyAdmin. Setelah uji `INSERT`, Browse menampilkan dua baris dengan sembilan atribut, yaitu kolom `id` dan delapan kolom data. Record uji dengan `id=2` terlihat lengkap sesuai nilai yang dimasukkan, termasuk kolom `minat` yang ditampilkan sebagai teks `HTML, CSS`, bukan sebagai larik atau nilai yang terpisah. Pemeriksaan tersebut memastikan data berhasil disimpan dan dapat dibaca kembali melalui phpMyAdmin.
 
-`VARCHAR(n)` digunakan untuk teks dengan panjang maksimal `n` karakter, `TINYINT` untuk bilangan bulat berukuran kecil, dan `DATE` untuk nilai tanggal. Nama kolom mengikuti atribut `name` pada form; khusus `minat[]`, tanda kurung siku menandakan nilai masukan berupa larik, sedangkan nama kolom penyimpanannya adalah `minat`.
+Pemeriksaan kesesuaian lanjutan pada Browse menemukan bahwa dua nilai pada record `id=1` belum sesuai dengan ketentuan form P9. Melalui fasilitas **Edit** phpMyAdmin, `jenis_pesan` diubah dari `ntalah` menjadi `pertanyaan` dan `prodi` diubah dari `Ti` menjadi `TI`. PhpMyAdmin mengonfirmasi `1 row affected`, dengan pembaruan hanya pada dua kolom tersebut sehingga kolom lainnya pada record itu tidak berubah.
 
-**Hasil pemeriksaan:** ukuran `nama` dan `pesan` sesuai dengan `maxlength` pada form. Rentang semester 1–14 dapat disimpan dengan `TINYINT`; pilihan `jenis_pesan`, gabungan topik `minat`, dan kode `prodi` juga muat pada panjang `VARCHAR` yang ditentukan. Input email saat ini belum menetapkan `maxlength`; `VARCHAR(255)` adalah kapasitas kolom yang dipilih untuk rancangan P10, sehingga validasi panjang aplikasi perlu ditambahkan saat penyimpanan ke basis data diterapkan.
+Setelah perbaikan, Browse menampilkan record pertama dengan `id=1`, nama `Ghanwen`, email `Jancok@gmail.com`, semester `2`, tanggal `2026-11-27`, jenis pesan `pertanyaan`, minat `HTML`, program studi `TI`, dan pesan `pele`. Record kedua tetap memiliki `id=2`, nama `Uji INSERT P10`, email `uji.insert@example.com`, semester `1`, tanggal `2026-11-16`, jenis pesan `pertanyaan`, minat `HTML, CSS`, program studi `TI`, dan pesan `Pengujian perintah INSERT`. Hasil pemeriksaan akhir menunjukkan bahwa kedua record tampil lengkap tanpa nilai yang hilang. Nama dan email terisi, kedua semester berada dalam rentang 1 sampai 14, tanggal menggunakan nilai tanggal yang valid, jenis pesan dan kode program studi sesuai dengan pilihan form, serta nilai minat berupa `HTML` atau gabungan `HTML, CSS` dalam bentuk teks. Kedua pesan tidak kosong dan panjangnya tidak melebihi batas 300 karakter. Nilai `id` tetap unik, dan `id=2` terbentuk otomatis saat perintah `INSERT` dijalankan.
 
-**Hasil pemeriksaan akhir:** tabel berisi sembilan atribut. Delapan atribut formulir (`nama`, `email`, `semester`, `tanggal`, `jenis_pesan`, `minat`, `prodi`, dan `pesan`) sudah terwakili dengan tipe data sesuai karakteristik nilainya. Hanya `id` yang ditetapkan sebagai `PRIMARY KEY` dan `AUTO_INCREMENT`; `id` bukan data yang dikirim dari formulir.
+Kriteria yang diperiksa pada kedua record meliputi:
 
-## Menentukan Primary Key dan `AUTO_INCREMENT`
-
-Kolom `id` bertipe `INT` ditetapkan sebagai `PRIMARY KEY` dan menggunakan `AUTO_INCREMENT`. Primary key membedakan setiap baris, sedangkan `AUTO_INCREMENT` membuat MySQL memberikan nilai id berikutnya secara otomatis ketika record baru ditambahkan. Kolom ini merupakan identitas data dan tidak berasal dari salah satu field formulir Kontak. Contoh nilai berurutan adalah `1`, `2`, dan `3`; id tetap membedakan record meskipun beberapa record memiliki nama yang sama.
-
-## Hasil Pengujian Data pada Tabel
-
-Pemeriksaan awal melalui phpMyAdmin pada basis data `db_pwd_2611500001`, sebelum uji `INSERT`, menunjukkan satu record di tabel `tbl_kontak_2611500001`. Data yang terbaca adalah sebagai berikut:
-
-| Kolom         | Nilai              |
-| ------------- | ------------------ |
-| `id`          | `1`                |
-| `nama`        | `Ghanwen`          |
-| `email`       | `Jancok@gmail.com` |
-| `semester`    | `2`                |
-| `tanggal`     | `2026-11-27`       |
-| `jenis_pesan` | `ntalah`           |
-| `minat`       | `HTML`             |
-| `prodi`       | `Ti`               |
-| `pesan`       | `pele`             |
-
-**Hasil pemeriksaan awal:** satu baris terbaca dan seluruh sembilan kolom memiliki nilai. `id` terisi otomatis dengan nilai `1`; nilai tanggal tersimpan dalam format `DATE`, semester berupa angka, dan nilai teks masih berada dalam kapasitas kolom masing-masing. Namun, `jenis_pesan` bernilai `ntalah`, bukan pilihan form `pertanyaan` atau `saran`; `prodi` bernilai `Ti`, bukan kode pilihan `SI` atau `TI` dengan kapitalisasi yang sesuai. Struktur tabel belum memiliki batasan `CHECK`, sehingga MySQL tetap menerima nilai teks tersebut. Data awal ini tidak diubah oleh uji `INSERT`.
-
-Pemeriksaan kode `index.php` juga menunjukkan bahwa submit form Kontak saat ini menyimpan nilai ke `$_SESSION["form_data"]` dan belum menjalankan perintah `INSERT` ke MySQL. Karena itu, keberadaan record di tabel ini membuktikan data telah tercatat di tabel, tetapi belum membuktikan bahwa submit form otomatis menyimpannya ke basis data.
-
-## E. Perintah `INSERT` dan Hasil Pengujian
-
-Untuk menguji penambahan data, perintah berikut dijalankan pada basis data `db_pwd_2611500001`:
-
-```sql
-INSERT INTO `tbl_kontak_2611500001` (`nama`, `email`, `semester`, `tanggal`, `jenis_pesan`, `minat`, `prodi`, `pesan`)
-VALUES ('Uji INSERT P10', 'uji.insert@example.com', 1, '2026-11-16', 'pertanyaan', 'HTML, CSS', 'TI', 'Pengujian perintah INSERT');
-```
-
-Nama tabel sesuai dengan tabel yang dibuat. Daftar atribut berisi delapan kolom data selain `id`, yang diisi otomatis oleh `AUTO_INCREMENT`. Klausa `VALUES` menyediakan delapan nilai dengan urutan yang sama seperti daftar kolom: nama, email, semester, tanggal, jenis pesan, minat, program studi, dan pesan.
-
-**Hasil pengujian:** MySQL mengonfirmasi `1 row inserted` dengan `Inserted row id: 2`. Setelah itu, pemeriksaan `SELECT * FROM tbl_kontak_2611500001` menunjukkan dua baris total dan record baru berisi `Uji INSERT P10`, `uji.insert@example.com`, semester `1`, tanggal `2026-11-16`, jenis pesan `pertanyaan`, minat `HTML, CSS`, prodi `TI`, dan pesan `Pengujian perintah INSERT`. Hasil ini memastikan tabel, jumlah kolom dan nilai, urutan data, serta pembuatan `id` otomatis sesuai.
-
-## F.3 - Memeriksa Data Menggunakan Fasilitas Browse
-
-Tabel `tbl_kontak_2611500001` dibuka melalui tab **Browse** di phpMyAdmin. Hasilnya menampilkan dua baris dengan sembilan atribut (`id` dan delapan kolom data). Baris pertama tetap memiliki `id=1`; baris uji yang ditambahkan pada F.1 tampil sebagai berikut:
-
-| Kolom         | Nilai yang ditampilkan      |
-| ------------- | --------------------------- |
-| `id`          | `2`                         |
-| `nama`        | `Uji INSERT P10`            |
-| `email`       | `uji.insert@example.com`    |
-| `semester`    | `1`                         |
-| `tanggal`     | `2026-11-16`                |
-| `jenis_pesan` | `pertanyaan`                |
-| `minat`       | `HTML, CSS`                 |
-| `prodi`       | `TI`                        |
-| `pesan`       | `Pengujian perintah INSERT` |
-
-**Hasil pemeriksaan Browse:** seluruh nilai pada baris uji sesuai dengan data yang dimasukkan melalui perintah `INSERT`, tidak ada atribut yang hilang atau berubah, dan `id` otomatis bernilai `2`. Kolom `minat` ditampilkan sebagai teks `HTML, CSS`, bukan sebagai larik atau nilai terpisah. Dengan demikian, data berhasil disimpan dan dapat dibaca kembali melalui fasilitas Browse phpMyAdmin.
-
-## Memeriksa dan Memperbaiki Kesesuaian Data
-
-Pemeriksaan lanjutan pada tab **Browse** menemukan dua nilai pada record `id=1` yang tidak sesuai dengan pilihan form P9: `jenis_pesan` sebelumnya bernilai `ntalah` dan `prodi` bernilai `Ti`. Melalui fasilitas **Edit** phpMyAdmin, nilai tersebut diperbaiki menjadi `pertanyaan` dan `TI`. phpMyAdmin mengonfirmasi `1 row affected` dengan perintah pembaruan hanya pada kedua kolom tersebut. Kolom lain pada record itu tidak diubah.
-
-Hasil Browse setelah perbaikan menampilkan data berikut:
-
-| `id` | `nama`           | `email`                  | `semester` | `tanggal`    | `jenis_pesan` | `minat`     | `prodi` | `pesan`                     |
-| ---- | ---------------- | ------------------------ | ---------- | ------------ | ------------- | ----------- | ------- | --------------------------- |
-| `1`  | `Ghanwen`        | `Jancok@gmail.com`       | `2`        | `2026-11-27` | `pertanyaan`  | `HTML`      | `TI`    | `pele`                      |
-| `2`  | `Uji INSERT P10` | `uji.insert@example.com` | `1`        | `2026-11-16` | `pertanyaan`  | `HTML, CSS` | `TI`    | `Pengujian perintah INSERT` |
-
-**Hasil pemeriksaan akhir:** kedua record tampil lengkap dan tidak ada nilai yang hilang. Nama dan email terisi; semester `1` dan `2` berada pada rentang form `1` sampai `14`; tanggal tampil sebagai tanggal yang valid; `jenis_pesan` menggunakan pilihan `pertanyaan`; `minat` berisi `HTML` atau gabungan `HTML, CSS` sebagai teks; dan `prodi` menggunakan kode `TI`. Kedua pesan berupa teks, tidak kosong, dan panjangnya tidak melebihi batas 300 karakter. Nilai `id` tetap unik (`1` dan `2`) dan `id=2` terbentuk otomatis saat `INSERT` dilakukan. Data pada record kedua tidak berubah selama perbaikan record pertama.
+- Nama terisi sebagai nama pengguna.
+- Email berisi alamat email.
+- Semester berupa nomor dalam rentang 1 sampai 14.
+- Tanggal merupakan nilai tanggal yang valid.
+- `jenis_pesan` bernilai `pertanyaan` atau `saran`.
+- `minat` berisi `HTML`, `CSS`, atau kombinasi keduanya sebagai teks.
+- `prodi` menggunakan kode `SI` atau `TI`.
+- Pesan tidak kosong dan tidak melebihi 300 karakter.
+- `id` unik dan dibuat otomatis.
