@@ -44,7 +44,7 @@ Kolom `id` bertipe `INT` ditetapkan sebagai `PRIMARY KEY` dan menggunakan `AUTO_
 
 ## Hasil Pengujian Data pada Tabel
 
-Pemeriksaan melalui phpMyAdmin pada basis data `db_pwd_2611500001` menunjukkan satu record di tabel `tbl_kontak_2611500001`. Data yang terbaca adalah sebagai berikut:
+Pemeriksaan awal melalui phpMyAdmin pada basis data `db_pwd_2611500001`, sebelum uji `INSERT`, menunjukkan satu record di tabel `tbl_kontak_2611500001`. Data yang terbaca adalah sebagai berikut:
 
 | Kolom         | Nilai              |
 | ------------- | ------------------ |
@@ -58,6 +58,19 @@ Pemeriksaan melalui phpMyAdmin pada basis data `db_pwd_2611500001` menunjukkan s
 | `prodi`       | `Ti`               |
 | `pesan`       | `pele`             |
 
-**Hasil pemeriksaan:** satu baris berhasil terbaca dan seluruh sembilan kolom memiliki nilai. `id` terisi otomatis dengan nilai `1`; nilai tanggal tersimpan dalam format `DATE`, semester berupa angka, dan nilai teks masih berada dalam kapasitas kolom masing-masing. Namun, `jenis_pesan` bernilai `ntalah`, bukan pilihan form `pertanyaan` atau `saran`; `prodi` bernilai `Ti`, bukan kode pilihan `SI` atau `TI` dengan kapitalisasi yang sesuai. Struktur tabel belum memiliki batasan `CHECK`, sehingga MySQL tetap menerima nilai teks tersebut. Data perlu diperbaiki agar konsisten dengan pilihan pada form.
+**Hasil pemeriksaan awal:** satu baris terbaca dan seluruh sembilan kolom memiliki nilai. `id` terisi otomatis dengan nilai `1`; nilai tanggal tersimpan dalam format `DATE`, semester berupa angka, dan nilai teks masih berada dalam kapasitas kolom masing-masing. Namun, `jenis_pesan` bernilai `ntalah`, bukan pilihan form `pertanyaan` atau `saran`; `prodi` bernilai `Ti`, bukan kode pilihan `SI` atau `TI` dengan kapitalisasi yang sesuai. Struktur tabel belum memiliki batasan `CHECK`, sehingga MySQL tetap menerima nilai teks tersebut. Data awal ini tidak diubah oleh uji `INSERT`.
 
 Pemeriksaan kode `index.php` juga menunjukkan bahwa submit form Kontak saat ini menyimpan nilai ke `$_SESSION["form_data"]` dan belum menjalankan perintah `INSERT` ke MySQL. Karena itu, keberadaan record di tabel ini membuktikan data telah tercatat di tabel, tetapi belum membuktikan bahwa submit form otomatis menyimpannya ke basis data.
+
+## E. Perintah `INSERT` dan Hasil Pengujian
+
+Untuk menguji penambahan data, perintah berikut dijalankan pada basis data `db_pwd_2611500001`:
+
+```sql
+INSERT INTO `tbl_kontak_2611500001` (`nama`, `email`, `semester`, `tanggal`, `jenis_pesan`, `minat`, `prodi`, `pesan`)
+VALUES ('Uji INSERT P10', 'uji.insert@example.com', 1, '2026-11-16', 'pertanyaan', 'HTML, CSS', 'TI', 'Pengujian perintah INSERT');
+```
+
+Nama tabel sesuai dengan tabel yang dibuat. Daftar atribut berisi delapan kolom data selain `id`, yang diisi otomatis oleh `AUTO_INCREMENT`. Klausa `VALUES` menyediakan delapan nilai dengan urutan yang sama seperti daftar kolom: nama, email, semester, tanggal, jenis pesan, minat, program studi, dan pesan.
+
+**Hasil pengujian:** MySQL mengonfirmasi `1 row inserted` dengan `Inserted row id: 2`. Setelah itu, pemeriksaan `SELECT * FROM tbl_kontak_2611500001` menunjukkan dua baris total dan record baru berisi `Uji INSERT P10`, `uji.insert@example.com`, semester `1`, tanggal `2026-11-16`, jenis pesan `pertanyaan`, minat `HTML, CSS`, prodi `TI`, dan pesan `Pengujian perintah INSERT`. Hasil ini memastikan tabel, jumlah kolom dan nilai, urutan data, serta pembuatan `id` otomatis sesuai.
