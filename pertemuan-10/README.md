@@ -2,29 +2,19 @@
 
 ## Ringkasan
 
+Pada P10, kebutuhan data untuk basis data ditentukan berdasarkan delapan field formulir Kontak P9, tanpa memasukkan informasi profil mahasiswa. Basis data dan tabel menggunakan NIM sebagai pembeda, yaitu `db_pwd_2611500001` dan `tbl_kontak_2611500001`. Rancangan tabel terdiri atas sembilan atribut: delapan data formulir dan `id` sebagai `INT PRIMARY KEY AUTO_INCREMENT`. Field `minat[]` disimpan sebagai teks dalam satu kolom dengan pilihan dipisahkan koma, sesuai ruang lingkup latihan.
+
 ## Menentukan Nama Basis Data dan Tabel
 
-NIM mahasiswa yang digunakan pada P10 adalah `2611500001`, sesuai nilai NIM pada `index.php`. Dengan pola penamaan `db_pwd_<NIM>` untuk basis data dan `tbl_kontak_<NIM>` untuk tabel, nama yang digunakan adalah:
-
-- Nama basis data: `db_pwd_2611500001`
-- Nama tabel: `tbl_kontak_2611500001`
+NIM mahasiswa yang digunakan pada P10 adalah `2611500001`, sesuai nilai NIM pada `index.php`. Dengan pola penamaan `db_pwd_<NIM>` untuk basis data dan `tbl_kontak_<NIM>` untuk tabel, basis data yang digunakan bernama `db_pwd_2611500001`, sedangkan tabelnya bernama `tbl_kontak_2611500001`.
 
 ## Menentukan Data yang Akan Disimpan ke Basis Data
 
-Data yang direncanakan untuk disimpan ke basis data dibatasi pada delapan nilai yang dikirim melalui form Kontak di `index.php`: nama lengkap, email, semester, tanggal kunjungan, jenis pesan, topik yang diminati, program studi, dan pesan. Pemeriksaan menunjukkan setiap data sesuai dengan atribut `name` dan elemen formulir berikut:
+Data yang direncanakan untuk disimpan ke basis data dibatasi pada delapan nilai yang dikirim melalui form Kontak di `index.php`, yaitu nama lengkap, email, semester, tanggal kunjungan, jenis pesan, topik yang diminati, program studi, dan pesan. Pada formulir tersebut, nama lengkap dikirim dengan atribut `name="nama"` melalui input teks, email menggunakan `name="email"` dan input bertipe email, sedangkan semester memakai `name="semester"` dengan input angka. Tanggal kunjungan menggunakan `name="tanggal"` pada input tanggal.
 
-| Data                | Atribut `name` | Jenis input/elemen                                            |
-| ------------------- | -------------- | ------------------------------------------------------------- |
-| Nama Lengkap        | `nama`         | `input type="text"`                                           |
-| Email               | `email`        | `input type="email"`                                          |
-| Semester            | `semester`     | `input type="number"`                                         |
-| Tanggal Kunjungan   | `tanggal`      | `input type="date"`                                           |
-| Jenis Pesan         | `jenis_pesan`  | `input type="radio"` (pilihan Pertanyaan atau Saran)          |
-| Topik yang Diminati | `minat[]`      | `input type="checkbox"` (dapat memilih lebih dari satu topik) |
-| Program Studi       | `prodi`        | elemen `<select>`                                             |
-| Pesan               | `pesan`        | elemen `<textarea>`                                           |
+Jenis pesan dikirim melalui dua pilihan radio yang sama-sama menggunakan atribut `name="jenis_pesan"`. Topik yang diminati memakai checkbox bernama `minat[]`, sehingga pengguna dapat memilih lebih dari satu topik dan PHP menerimanya sebagai array. Program studi dipilih melalui elemen `<select>` dengan atribut `name="prodi"`, sementara pesan dikirim melalui elemen `<textarea>` bernama `pesan`.
 
-**Hasil pengujian:** kedelapan data pada tabel cocok dengan elemen form Kontak dan key yang dibaca PHP untuk `$_SESSION["form_data"]`. `minat[]` sengaja memakai tanda kurung siku agar beberapa pilihan checkbox dikirim sebagai array.
+**Hasil pengujian:** kedelapan data tersebut cocok dengan elemen form Kontak dan key yang dibaca PHP untuk `$_SESSION["form_data"]`. Tanda kurung siku pada `minat[]` digunakan agar beberapa pilihan checkbox dikirim sebagai array.
 
 Informasi profil seperti NIM (`$nim`), nama mahasiswa (`$namaMahasiswa`), dan program studi profil (`$programStudi`) tidak dikirim dari form Kontak, sehingga tidak termasuk data formulir yang dianalisis untuk disimpan. Field Program Studi pada tabel adalah nilai pilihan `prodi` yang dikirim secara terpisah dari form Kontak.
 
@@ -32,31 +22,15 @@ Informasi profil seperti NIM (`$nim`), nama mahasiswa (`$namaMahasiswa`), dan pr
 
 **Hasil pemeriksaan:** kedua checkbox topik pada form Kontak di `index.php` menggunakan atribut `name="minat[]"`. Checkbox HTML memiliki `value="HTML"`, sedangkan checkbox CSS memiliki `value="CSS"`. Tanda kurung siku pada atribut `name` membuat pilihan yang dikirim PHP diterima sebagai larik, misalnya `["HTML", "CSS"]` saat kedua topik dipilih.
 
-Untuk rancangan P10 yang menggunakan satu tabel, nilai larik `minat` direpresentasikan sebagai teks dengan pilihan dipisahkan koma dalam satu kolom:
-
-| Pilihan pengguna | Nilai pada kolom `minat` |
-| ---------------- | ------------------------ |
-| HTML             | `HTML`                   |
-| CSS              | `CSS`                    |
-| HTML dan CSS     | `HTML, CSS`              |
+Untuk rancangan P10 yang menggunakan satu tabel, nilai larik `minat` disimpan sebagai teks dalam satu kolom dengan pilihan dipisahkan koma. Jika pengguna hanya memilih HTML, nilai yang disimpan adalah `HTML`; jika hanya memilih CSS, nilainya adalah `CSS`; sedangkan jika keduanya dipilih, nilai kolom menjadi `HTML, CSS`.
 
 Representasi satu kolom ini menyederhanakan praktik penyimpanan sesuai ruang lingkup P10. Menyimpan beberapa pilihan dalam satu kolom bukan normalisasi basis data yang ideal; pendekatan ini digunakan untuk kebutuhan pembelajaran.
 
 ## D.4 - Memeriksa Rancangan Struktur Tabel
 
-Berdasarkan hasil perancangan sebelumnya, struktur akhir tabel `tbl_kontak_2611500001` terdiri atas satu kolom identitas dan delapan atribut dari formulir Kontak:
+Berdasarkan hasil perancangan sebelumnya, struktur akhir tabel `tbl_kontak_2611500001` terdiri atas sembilan atribut. Atribut pertama adalah `id` bertipe `INT` yang ditetapkan sebagai `PRIMARY KEY` dan menggunakan `AUTO_INCREMENT` untuk membentuk identitas unik setiap data secara otomatis. Atribut `nama` menggunakan `VARCHAR(50)` untuk menyimpan nama lengkap hingga 50 karakter, sedangkan `email` menggunakan `VARCHAR(255)` untuk menyimpan alamat email.
 
-| No. | Atribut       | Tipe data      | Ketentuan                       | Keterangan                                                                              |
-| --- | ------------- | -------------- | ------------------------------- | --------------------------------------------------------------------------------------- |
-| 1   | `id`          | `INT`          | `PRIMARY KEY`, `AUTO_INCREMENT` | Identitas unik setiap data kontak, dibuat otomatis.                                     |
-| 2   | `nama`        | `VARCHAR(50)`  |                                 | Menyimpan nama lengkap, maksimal 50 karakter sesuai batas formulir.                     |
-| 3   | `email`       | `VARCHAR(255)` |                                 | Menyimpan alamat email. Input menggunakan `type="email"` untuk memeriksa format alamat. |
-| 4   | `semester`    | `TINYINT`      |                                 | Menyimpan nomor semester 1 sampai 14.                                                   |
-| 5   | `tanggal`     | `DATE`         |                                 | Menyimpan tanggal kunjungan.                                                            |
-| 6   | `jenis_pesan` | `VARCHAR(20)`  |                                 | Menyimpan pilihan jenis pesan, yaitu `pertanyaan` atau `saran`.                         |
-| 7   | `minat`       | `VARCHAR(50)`  |                                 | Menyimpan satu atau beberapa pilihan minat sebagai teks, misalnya `HTML, CSS`.          |
-| 8   | `prodi`       | `VARCHAR(2)`   |                                 | Menyimpan kode program studi, yaitu `SI` atau `TI`.                                     |
-| 9   | `pesan`       | `VARCHAR(300)` |                                 | Menyimpan isi pesan, maksimal 300 karakter sesuai batas formulir.                       |
+Atribut `semester` menggunakan `TINYINT` karena menyimpan nomor semester dalam rentang 1 sampai 14, dan `tanggal` menggunakan tipe `DATE` untuk menyimpan tanggal kunjungan. Atribut `jenis_pesan` bertipe `VARCHAR(20)` untuk menyimpan pilihan `pertanyaan` atau `saran`. Atribut `minat` menggunakan `VARCHAR(50)` agar satu atau beberapa topik dapat disimpan sebagai teks, misalnya `HTML, CSS`. Selanjutnya, `prodi` menggunakan `VARCHAR(2)` untuk menyimpan kode `SI` atau `TI`, sedangkan `pesan` menggunakan `VARCHAR(300)` untuk menyimpan isi pesan hingga 300 karakter.
 
 `VARCHAR(n)` digunakan untuk teks dengan panjang maksimal `n` karakter, `TINYINT` untuk bilangan bulat berukuran kecil, dan `DATE` untuk nilai tanggal. Nama kolom mengikuti atribut `name` pada form; khusus `minat[]`, tanda kurung siku menandakan nilai masukan berupa larik, sedangkan nama kolom penyimpanannya adalah `minat`.
 
