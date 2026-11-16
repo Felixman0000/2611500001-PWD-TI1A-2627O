@@ -44,19 +44,24 @@ Representasi satu kolom ini menyederhanakan praktik penyimpanan sesuai ruang lin
 
 ## Menentukan Atribut dan Tipe Data
 
-Berdasarkan delapan data formulir Kontak, rancangan kolom untuk tabel `tbl_kontak_2611500001` adalah sebagai berikut:
+Berdasarkan delapan data formulir Kontak dan satu kolom identitas otomatis, rancangan kolom untuk tabel `tbl_kontak_2611500001` adalah sebagai berikut:
 
-| No. | Atribut       | Tipe data      | Keterangan                                                                              |
-| --- | ------------- | -------------- | --------------------------------------------------------------------------------------- |
-| 1   | `nama`        | `VARCHAR(50)`  | Menyimpan nama lengkap, maksimal 50 karakter sesuai batas formulir.                     |
-| 2   | `email`       | `VARCHAR(255)` | Menyimpan alamat email. Input menggunakan `type="email"` untuk memeriksa format alamat. |
-| 3   | `semester`    | `TINYINT`      | Menyimpan nomor semester 1 sampai 14.                                                   |
-| 4   | `tanggal`     | `DATE`         | Menyimpan tanggal kunjungan.                                                            |
-| 5   | `jenis_pesan` | `VARCHAR(20)`  | Menyimpan pilihan jenis pesan, yaitu `pertanyaan` atau `saran`.                         |
-| 6   | `minat`       | `VARCHAR(50)`  | Menyimpan satu atau beberapa pilihan minat sebagai teks, misalnya `HTML, CSS`.          |
-| 7   | `prodi`       | `VARCHAR(2)`   | Menyimpan kode program studi, yaitu `SI` atau `TI`.                                     |
-| 8   | `pesan`       | `VARCHAR(300)` | Menyimpan isi pesan, maksimal 300 karakter sesuai batas formulir.                       |
+| No. | Atribut       | Tipe data      | Ketentuan                       | Keterangan                                                                              |
+| --- | ------------- | -------------- | ------------------------------- | --------------------------------------------------------------------------------------- |
+| 1   | `id`          | `INT`          | `PRIMARY KEY`, `AUTO_INCREMENT` | Identitas unik setiap data kontak, dibuat otomatis.                                     |
+| 2   | `nama`        | `VARCHAR(50)`  |                                 | Menyimpan nama lengkap, maksimal 50 karakter sesuai batas formulir.                     |
+| 3   | `email`       | `VARCHAR(255)` |                                 | Menyimpan alamat email. Input menggunakan `type="email"` untuk memeriksa format alamat. |
+| 4   | `semester`    | `TINYINT`      |                                 | Menyimpan nomor semester 1 sampai 14.                                                   |
+| 5   | `tanggal`     | `DATE`         |                                 | Menyimpan tanggal kunjungan.                                                            |
+| 6   | `jenis_pesan` | `VARCHAR(20)`  |                                 | Menyimpan pilihan jenis pesan, yaitu `pertanyaan` atau `saran`.                         |
+| 7   | `minat`       | `VARCHAR(50)`  |                                 | Menyimpan satu atau beberapa pilihan minat sebagai teks, misalnya `HTML, CSS`.          |
+| 8   | `prodi`       | `VARCHAR(2)`   |                                 | Menyimpan kode program studi, yaitu `SI` atau `TI`.                                     |
+| 9   | `pesan`       | `VARCHAR(300)` |                                 | Menyimpan isi pesan, maksimal 300 karakter sesuai batas formulir.                       |
 
 `VARCHAR(n)` digunakan untuk teks dengan panjang maksimal `n` karakter, `TINYINT` untuk bilangan bulat berukuran kecil, dan `DATE` untuk nilai tanggal. Nama kolom mengikuti atribut `name` pada form; khusus `minat[]`, tanda kurung siku menandakan nilai masukan berupa larik, sedangkan nama kolom penyimpanannya adalah `minat`.
 
 **Hasil pemeriksaan:** ukuran `nama` dan `pesan` sesuai dengan `maxlength` pada form. Rentang semester 1–14 dapat disimpan dengan `TINYINT`; pilihan `jenis_pesan`, gabungan topik `minat`, dan kode `prodi` juga muat pada panjang `VARCHAR` yang ditentukan. Input email saat ini belum menetapkan `maxlength`; `VARCHAR(255)` adalah kapasitas kolom yang dipilih untuk rancangan P10, sehingga validasi panjang aplikasi perlu ditambahkan saat penyimpanan ke basis data diterapkan.
+
+## Menentukan Primary Key dan `AUTO_INCREMENT`
+
+Kolom `id` bertipe `INT` ditetapkan sebagai `PRIMARY KEY` dan menggunakan `AUTO_INCREMENT`. Primary key membedakan setiap baris, sedangkan `AUTO_INCREMENT` membuat MySQL memberikan nilai id berikutnya secara otomatis ketika record baru ditambahkan. Kolom ini merupakan identitas data dan tidak berasal dari salah satu field formulir Kontak. Contoh nilai berurutan adalah `1`, `2`, dan `3`; id tetap membedakan record meskipun beberapa record memiliki nama yang sama.
