@@ -41,3 +41,22 @@ Untuk rancangan P10 yang menggunakan satu tabel, nilai larik `minat` direpresent
 | HTML dan CSS     | `HTML, CSS`              |
 
 Representasi satu kolom ini menyederhanakan praktik penyimpanan sesuai ruang lingkup P10. Menyimpan beberapa pilihan dalam satu kolom bukan normalisasi basis data yang ideal; pendekatan ini digunakan untuk kebutuhan pembelajaran.
+
+## Menentukan Atribut dan Tipe Data
+
+Berdasarkan delapan data formulir Kontak, rancangan kolom untuk tabel `tbl_kontak_2611500001` adalah sebagai berikut:
+
+| No. | Atribut       | Tipe data      | Keterangan                                                                              |
+| --- | ------------- | -------------- | --------------------------------------------------------------------------------------- |
+| 1   | `nama`        | `VARCHAR(50)`  | Menyimpan nama lengkap, maksimal 50 karakter sesuai batas formulir.                     |
+| 2   | `email`       | `VARCHAR(255)` | Menyimpan alamat email. Input menggunakan `type="email"` untuk memeriksa format alamat. |
+| 3   | `semester`    | `TINYINT`      | Menyimpan nomor semester 1 sampai 14.                                                   |
+| 4   | `tanggal`     | `DATE`         | Menyimpan tanggal kunjungan.                                                            |
+| 5   | `jenis_pesan` | `VARCHAR(20)`  | Menyimpan pilihan jenis pesan, yaitu `pertanyaan` atau `saran`.                         |
+| 6   | `minat`       | `VARCHAR(50)`  | Menyimpan satu atau beberapa pilihan minat sebagai teks, misalnya `HTML, CSS`.          |
+| 7   | `prodi`       | `VARCHAR(2)`   | Menyimpan kode program studi, yaitu `SI` atau `TI`.                                     |
+| 8   | `pesan`       | `VARCHAR(300)` | Menyimpan isi pesan, maksimal 300 karakter sesuai batas formulir.                       |
+
+`VARCHAR(n)` digunakan untuk teks dengan panjang maksimal `n` karakter, `TINYINT` untuk bilangan bulat berukuran kecil, dan `DATE` untuk nilai tanggal. Nama kolom mengikuti atribut `name` pada form; khusus `minat[]`, tanda kurung siku menandakan nilai masukan berupa larik, sedangkan nama kolom penyimpanannya adalah `minat`.
+
+**Hasil pemeriksaan:** ukuran `nama` dan `pesan` sesuai dengan `maxlength` pada form. Rentang semester 1–14 dapat disimpan dengan `TINYINT`; pilihan `jenis_pesan`, gabungan topik `minat`, dan kode `prodi` juga muat pada panjang `VARCHAR` yang ditentukan. Input email saat ini belum menetapkan `maxlength`; `VARCHAR(255)` adalah kapasitas kolom yang dipilih untuk rancangan P10, sehingga validasi panjang aplikasi perlu ditambahkan saat penyimpanan ke basis data diterapkan.
