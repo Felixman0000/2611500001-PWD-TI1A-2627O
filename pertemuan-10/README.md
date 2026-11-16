@@ -41,3 +41,23 @@ Atribut `semester` menggunakan `TINYINT` karena menyimpan nomor semester dalam r
 ## Menentukan Primary Key dan `AUTO_INCREMENT`
 
 Kolom `id` bertipe `INT` ditetapkan sebagai `PRIMARY KEY` dan menggunakan `AUTO_INCREMENT`. Primary key membedakan setiap baris, sedangkan `AUTO_INCREMENT` membuat MySQL memberikan nilai id berikutnya secara otomatis ketika record baru ditambahkan. Kolom ini merupakan identitas data dan tidak berasal dari salah satu field formulir Kontak. Contoh nilai berurutan adalah `1`, `2`, dan `3`; id tetap membedakan record meskipun beberapa record memiliki nama yang sama.
+
+## Hasil Pengujian Data pada Tabel
+
+Pemeriksaan melalui phpMyAdmin pada basis data `db_pwd_2611500001` menunjukkan satu record di tabel `tbl_kontak_2611500001`. Data yang terbaca adalah sebagai berikut:
+
+| Kolom         | Nilai              |
+| ------------- | ------------------ |
+| `id`          | `1`                |
+| `nama`        | `Ghanwen`          |
+| `email`       | `Jancok@gmail.com` |
+| `semester`    | `2`                |
+| `tanggal`     | `2026-11-27`       |
+| `jenis_pesan` | `ntalah`           |
+| `minat`       | `HTML`             |
+| `prodi`       | `Ti`               |
+| `pesan`       | `pele`             |
+
+**Hasil pemeriksaan:** satu baris berhasil terbaca dan seluruh sembilan kolom memiliki nilai. `id` terisi otomatis dengan nilai `1`; nilai tanggal tersimpan dalam format `DATE`, semester berupa angka, dan nilai teks masih berada dalam kapasitas kolom masing-masing. Namun, `jenis_pesan` bernilai `ntalah`, bukan pilihan form `pertanyaan` atau `saran`; `prodi` bernilai `Ti`, bukan kode pilihan `SI` atau `TI` dengan kapitalisasi yang sesuai. Struktur tabel belum memiliki batasan `CHECK`, sehingga MySQL tetap menerima nilai teks tersebut. Data perlu diperbaiki agar konsisten dengan pilihan pada form.
+
+Pemeriksaan kode `index.php` juga menunjukkan bahwa submit form Kontak saat ini menyimpan nilai ke `$_SESSION["form_data"]` dan belum menjalankan perintah `INSERT` ke MySQL. Karena itu, keberadaan record di tabel ini membuktikan data telah tercatat di tabel, tetapi belum membuktikan bahwa submit form otomatis menyimpannya ke basis data.
